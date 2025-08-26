@@ -1,0 +1,17 @@
+@import "../../styles/variables";
+
+.footer {
+  background-color: $color-background;
+  box-shadow: -2px 0px 8px 2px $color-shadow;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer__text {
+  font-family: "Karla", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: $color-text-primary;
+}
