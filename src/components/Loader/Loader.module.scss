@@ -16,14 +16,14 @@
     color: #212121;
   }
 
-  &--large {
+  &_large {
     .loader__image {
       width: 475px;
       height: 465px;
     }
   }
 
-  &--small {
+  &_small {
     .loader__image {
       width: 103px;
       height: 101px;

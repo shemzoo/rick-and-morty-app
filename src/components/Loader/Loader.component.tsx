@@ -1,14 +1,14 @@
-import styles from "./Loader.module.scss";
-import LoaderImage from "../../assets/loader.png";
+import LoaderImage from "@/assets/loader.png";
 
-interface LoaderProps {
-  size: "large" | "small";
-  text?: string;
-}
+import styles from "./Loader.module.scss";
+
+type LoaderProps = 
+  | { size: "large"; text?: string }
+  | { size: "small"; text?: never };
 
 const Loader = ({ size, text }: LoaderProps) => {
   const loaderClassName = `${styles.loader} ${
-    styles[`loader--${size}`]
+    styles[`loader_${size}`]
   }`;
 
   return (

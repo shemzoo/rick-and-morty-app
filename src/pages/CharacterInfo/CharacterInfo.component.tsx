@@ -1,28 +1,20 @@
 import { Link } from "react-router-dom";
 
-import styles from "./CharacterInfo.module.scss";
-import ArrowBack from "../../assets/arrow-back.svg";
+import ArrowBackIcon from "@/components/ArrowBackIcon/ArrowBackIcon.component";
+import Loader from "@/components/Loader/Loader.component";
 
-import Loader from "../../components/Loader/Loader.component";
+import styles from "./CharacterInfo.module.scss";
 
 const CharacterInfo = () => {
   return (
-    <div className={styles["character-info"]}>
-      <Link
-        to="/"
-        className={styles["character-info__go-back"]}
-      >
-        <img
-          src={ArrowBack}
-          alt="Go back"
-          className={styles["character-info__go-back-icon"]}
-        />
+    <div className={styles.characterInfo}>
+      <Link to="/" className={styles.characterInfo__goBack}>
+        <ArrowBackIcon />
         <span>GO BACK</span>
       </Link>
-      <Loader
-        size={"large"}
-        text="Loading character card..."
-      />
+      <Loader 
+        size="large"
+        text="Loading character card..." />
     </div>
   );
 };

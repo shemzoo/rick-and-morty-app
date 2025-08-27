@@ -1,9 +1,9 @@
 .logo {
   display: block;
-}
 
-.logo__image {
-  width: 46px;
-  height: 49px;
-  display: block;
+  &__image {
+    width: 46px;
+    height: 49px;
+    display: block;
+  }
 }

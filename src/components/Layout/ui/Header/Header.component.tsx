@@ -1,5 +1,6 @@
+import Logo from "@/components/Logo/Logo.component";
+
 import styles from "./Header.module.scss";
-import Logo from "../Logo/Logo.component";
 
 const Header = () => {
   return (
