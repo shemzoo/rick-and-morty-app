@@ -67,7 +67,7 @@ const Selector = ({
       >
         <span>
           {displayLabel}
-          {withStatusIcon && value && <StatusIcon status={value as Status} />}
+          {withStatusIcon && size === 'small' && value && <StatusIcon status={value as Status} />}
         </span>
         {isOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
       </div>
@@ -80,7 +80,7 @@ const Selector = ({
               onClick={() => handleSelect(option.value)}
             >
               {option.label}
-              {withStatusIcon && <StatusIcon status={option.value as Status} />}
+              {withStatusIcon && size === 'small' && <StatusIcon status={option.value as Status} />}
             </li>
           ))}
         </ul>
