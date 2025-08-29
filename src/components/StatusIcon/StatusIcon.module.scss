@@ -1,0 +1,26 @@
+.statusIcon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+
+  &_alive {
+    background-color: #12b800;
+  }
+
+  &_dead {
+    background-color: #df0000;
+  }
+
+  &_unknown {
+    background-color: #ff9900;
+  }
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}

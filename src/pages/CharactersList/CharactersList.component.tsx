@@ -1,8 +1,8 @@
-import logo from "@/assets/rick-and-morty-logo.png";
+import logo from '@/assets/rick-and-morty-logo.png';
 
-import Loader from "@/components/Loader/Loader.component";
+import Loader from '@/components/Loader/Loader.component';
 
-import styles from "./CharactersList.module.scss";
+import styles from './CharactersList.module.scss';
 
 const CharactersList = () => {
   return (
@@ -10,11 +10,11 @@ const CharactersList = () => {
       <img
         className={styles.list__logo}
         src={logo}
-        alt="Rick and Morty Logo"
+        alt='Rick and Morty Logo'
       />
       <Loader
-        size="large"
-        text="Loading characters..."
+        size='large'
+        text='Loading characters...'
       />
     </div>
   );
