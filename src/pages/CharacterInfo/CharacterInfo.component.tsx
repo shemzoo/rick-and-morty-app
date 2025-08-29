@@ -4,12 +4,33 @@ import { Link } from 'react-router-dom';
 import ArrowBackIcon from '@/assets/arrow-back.svg?react';
 import Loader from '@/components/Loader/Loader.component';
 import Selector from '@/components/Selector/Selector.component';
+import StatusIcon, {
+  type Status
+} from '@/components/StatusIcon/StatusIcon.component';
 
 import styles from './CharacterInfo.module.scss';
 
+interface StatusOptionRendererProps {
+  option: { value: string; label: string };
+  size?: 'large' | 'small';
+}
+
+const StatusOptionRenderer = ({ option, size }: StatusOptionRendererProps) => {
+  if (size === 'small') {
+    return (
+      <StatusIcon
+        status={option.value as Status}
+        label={option.label}
+      />
+    );
+  }
+
+  return <span>{option.label}</span>;
+};
+
 const CharacterInfo = () => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>();
-  const [status, setStatus] = useState<string | undefined>();
+  const [status, setStatus] = useState<Status | undefined>();
 
   const options = [
     { value: '1', label: 'Human' },
@@ -19,7 +40,7 @@ const CharacterInfo = () => {
     { value: '5', label: 'Robot' }
   ];
 
-  const statusOptions = [
+  const statusOptions: { value: Status; label: string }[] = [
     { value: 'alive', label: 'Alive' },
     { value: 'dead', label: 'Dead' },
     { value: 'unknown', label: 'Unknown' }
@@ -49,9 +70,9 @@ const CharacterInfo = () => {
           options={statusOptions}
           label='Status'
           value={status}
-          withStatusIcon={true}
-          onChange={setStatus}
+          onChange={(value) => setStatus(value as Status)}
           size='small'
+          OptionRenderer={StatusOptionRenderer}
         />
       </div>
     </div>

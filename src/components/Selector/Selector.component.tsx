@@ -1,20 +1,33 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, type ComponentType } from 'react';
 
-import StatusIcon from '@/components/StatusIcon/StatusIcon.component';
-import type { Status } from '@/components/StatusIcon/StatusIcon.component';
+import cn from 'classnames';
 
 import ArrowDownIcon from '@/assets/arrow-down.svg?react';
 import ArrowUpIcon from '@/assets/arrow-up.svg?react';
 
 import styles from './Selector.module.scss';
 
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface OptionRendererProps {
+  option: Option;
+  size?: 'large' | 'small';
+}
+
+const DefaultOptionRenderer = ({ option }: OptionRendererProps) => {
+  return <span>{option.label}</span>;
+};
+
 export interface ISelectorProps {
-  options: { value: string; label: string }[];
+  options: Option[];
   label: string;
   size?: 'large' | 'small';
   onChange?: (value: string | undefined) => void;
   value?: string;
-  withStatusIcon?: boolean;
+  OptionRenderer?: ComponentType<OptionRendererProps>;
 }
 
 const Selector = ({
@@ -23,7 +36,7 @@ const Selector = ({
   size = 'large',
   value,
   onChange,
-  withStatusIcon = false
+  OptionRenderer = DefaultOptionRenderer
 }: ISelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectorRef = useRef<HTMLDivElement>(null);
@@ -52,9 +65,8 @@ const Selector = ({
   }, []);
 
   const selectedOption = options.find((option) => option.value === value);
-  const displayLabel = selectedOption ? selectedOption.label : label;
 
-  const selectorClassName = `${styles.selector} ${styles[`selector_${size}`]}`;
+  const selectorClassName = cn(styles.selector, styles[`selector_${size}`]);
 
   return (
     <div
@@ -65,10 +77,14 @@ const Selector = ({
         className={styles.selector__header}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>
-          {displayLabel}
-          {withStatusIcon && size === 'small' && value && <StatusIcon status={value as Status} />}
-        </span>
+        {selectedOption ? (
+          <OptionRenderer
+            option={selectedOption}
+            size={size}
+          />
+        ) : (
+          <span>{label}</span>
+        )}
         {isOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
       </div>
       {isOpen && (
@@ -79,8 +95,10 @@ const Selector = ({
               className={styles.selector__option}
               onClick={() => handleSelect(option.value)}
             >
-              {option.label}
-              {withStatusIcon && size === 'small' && <StatusIcon status={option.value as Status} />}
+              <OptionRenderer
+                option={option}
+                size={size}
+              />
             </li>
           ))}
         </ul>
