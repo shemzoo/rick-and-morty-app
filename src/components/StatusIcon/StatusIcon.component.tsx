@@ -1,4 +1,4 @@
-import cn from 'classnames';
+import { classNames } from '@/utils/classNames';
 
 import styles from './StatusIcon.module.scss';
 
@@ -10,7 +10,10 @@ interface IStatusIconProps {
 }
 
 const StatusIcon = ({ status, label }: IStatusIconProps) => {
-  const statusClassName = cn(styles.statusIcon, styles[`statusIcon_${status}`]);
+  const statusClassName = classNames(
+    styles.statusIcon,
+    styles[`statusIcon_${status}`]
+  );
 
   if (label) {
     return (

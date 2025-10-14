@@ -1,6 +1,5 @@
-import cn from 'classnames';
-
 import LoaderImage from '@/assets/loader.png';
+import { classNames } from '@/utils/classNames';
 
 import styles from './Loader.module.scss';
 
@@ -9,7 +8,7 @@ type LoaderProps =
   | { size: 'small'; text?: never };
 
 const Loader = ({ size, text }: LoaderProps) => {
-  const loaderClassName = cn(styles.loader, styles[`loader_${size}`]);
+  const loaderClassName = classNames(styles.loader, styles[`loader_${size}`]);
 
   return (
     <div className={loaderClassName}>

@@ -1,9 +1,8 @@
 import { type ComponentType, useEffect, useRef, useState } from 'react';
 
-import cn from 'classnames';
-
 import ArrowDownIcon from '@/assets/arrow-down.svg?react';
 import ArrowUpIcon from '@/assets/arrow-up.svg?react';
+import { classNames } from '@/utils/classNames';
 
 import styles from './Selector.module.scss';
 
@@ -65,7 +64,10 @@ const Selector = ({
 
   const selectedOption = options.find((option) => option.value === value);
 
-  const selectorClassName = cn(styles.selector, styles[`selector_${size}`]);
+  const selectorClassName = classNames(
+    styles.selector,
+    styles[`selector_${size}`]
+  );
 
   return (
     <div
