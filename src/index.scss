@@ -1,5 +1,5 @@
-@import "@/styles/variables";
-@import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap");
+@use '@/styles/variables' as *;
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
 
 * {
   margin: 0;
@@ -8,6 +8,6 @@
 }
 
 body {
-  font-family: "Karla", sans-serif;
+  font-family: 'Karla', sans-serif;
   background-color: $color-background;
 }

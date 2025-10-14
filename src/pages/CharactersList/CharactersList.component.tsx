@@ -1,5 +1,4 @@
 import logo from '@/assets/rick-and-morty-logo.png';
-
 import Loader from '@/components/Loader/Loader.component';
 
 import styles from './CharactersList.module.scss';

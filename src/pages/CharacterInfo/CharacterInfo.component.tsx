@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { Link } from 'react-router-dom';
 
 import ArrowBackIcon from '@/assets/arrow-back.svg?react';
@@ -16,6 +17,7 @@ interface StatusOptionRendererProps {
 }
 
 const StatusOptionRenderer = ({ option, size }: StatusOptionRendererProps) => {
+  // убрать строгую проверку на small и лишний проп size
   if (size === 'small') {
     return (
       <StatusIcon
