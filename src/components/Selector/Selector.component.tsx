@@ -14,7 +14,6 @@ interface Option {
 
 interface OptionRendererProps {
   option: Option;
-  size?: 'large' | 'small';
 }
 
 const DefaultOptionRenderer = ({ option }: OptionRendererProps) => {
@@ -78,10 +77,7 @@ const Selector = ({
         onClick={() => setIsOpen(!isOpen)}
       >
         {selectedOption ? (
-          <OptionRenderer
-            option={selectedOption}
-            size={size}
-          />
+          <OptionRenderer option={selectedOption} />
         ) : (
           <span>{label}</span>
         )}
@@ -95,10 +91,7 @@ const Selector = ({
               className={styles.selector__option}
               onClick={() => handleSelect(option.value)}
             >
-              <OptionRenderer
-                option={option}
-                size={size}
-              />
+              <OptionRenderer option={option} />
             </li>
           ))}
         </ul>

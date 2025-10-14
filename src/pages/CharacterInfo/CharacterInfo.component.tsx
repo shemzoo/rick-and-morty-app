@@ -13,21 +13,15 @@ import styles from './CharacterInfo.module.scss';
 
 interface StatusOptionRendererProps {
   option: { value: string; label: string };
-  size?: 'large' | 'small';
 }
 
-const StatusOptionRenderer = ({ option, size }: StatusOptionRendererProps) => {
-  // убрать строгую проверку на small и лишний проп size
-  if (size === 'small') {
-    return (
-      <StatusIcon
-        status={option.value as Status}
-        label={option.label}
-      />
-    );
-  }
-
-  return <span>{option.label}</span>;
+const StatusOptionRenderer = ({ option }: StatusOptionRendererProps) => {
+  return (
+    <StatusIcon
+      status={option.value as Status}
+      label={option.label}
+    />
+  );
 };
 
 const CharacterInfo = () => {
