@@ -3,11 +3,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import ArrowBackIcon from '@/assets/arrow-back.svg?react';
+import SearchIcon from '@/assets/search.svg?react';
 import Loader from '@/components/Loader/Loader.component';
 import Selector from '@/components/Selector/Selector.component';
 import StatusIcon, {
   type Status
 } from '@/components/StatusIcon/StatusIcon.component';
+import { TextInput } from '@/components/TextInput/TextInput.component';
 
 import styles from './CharacterInfo.module.scss';
 
@@ -70,6 +72,12 @@ const CharacterInfo = () => {
           size='small'
           OptionRenderer={StatusOptionRenderer}
         />
+        <TextInput
+          variant='filter'
+          placeholder='Filter by name...'
+          icon={<SearchIcon />}
+        ></TextInput>
+        <TextInput variant='form'></TextInput>
       </div>
     </div>
   );
