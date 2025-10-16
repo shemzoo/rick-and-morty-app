@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 import ArrowBackIcon from '@/assets/arrow-back.svg?react';
 import SearchIcon from '@/assets/search.svg?react';
-import Loader from '@/components/Loader/Loader.component';
-import Selector from '@/components/Selector/Selector.component';
+import Loader from '@/shared/components/Loader/Loader.component';
+import Selector from '@/shared/components/Selector/Selector.component';
 import StatusIcon, {
   type Status
-} from '@/components/StatusIcon/StatusIcon.component';
-import { TextInput } from '@/components/TextInput/TextInput.component';
+} from '@/shared/components/StatusIcon/StatusIcon.component';
+import { TextInput } from '@/shared/components/TextInput/TextInput.component';
 
 import styles from './CharacterInfo.module.scss';
 

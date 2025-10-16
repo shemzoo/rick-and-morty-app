@@ -1,5 +1,5 @@
 import LoaderImage from '@/assets/loader.png';
-import { classNames } from '@/utils/classNames';
+import { classNames } from '@/shared/helpers/classNames';
 
 import styles from './Loader.module.scss';
 

@@ -2,7 +2,7 @@ import { type ComponentType, useEffect, useRef, useState } from 'react';
 
 import ArrowDownIcon from '@/assets/arrow-down.svg?react';
 import ArrowUpIcon from '@/assets/arrow-up.svg?react';
-import { classNames } from '@/utils/classNames';
+import { classNames } from '@/shared/helpers/classNames';
 
 import styles from './Selector.module.scss';
 

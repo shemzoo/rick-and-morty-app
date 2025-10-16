@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Layout from '@/components/Layout/Layout.component';
 import CharacterInfo from '@/pages/CharacterInfo/CharacterInfo.component';
 import CharactersList from '@/pages/CharactersList/CharactersList.component';
+import Layout from '@/shared/components/Layout/Layout.component';
 
 function App() {
   return (

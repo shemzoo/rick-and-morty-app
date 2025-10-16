@@ -1,4 +1,4 @@
-import Logo from '@/components/Logo/Logo.component';
+import Logo from '@/shared/components/Logo/Logo.component';
 
 import styles from './Header.module.scss';
 

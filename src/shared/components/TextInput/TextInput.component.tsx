@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import type { ReactNode } from 'react';
 
-import { classNames } from '@/utils/classNames';
+import { classNames } from '@/shared/helpers/classNames';
 
 import styles from './TextInput.module.scss';
 
