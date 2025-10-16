@@ -6,20 +6,21 @@ import { classNames } from '@/shared/helpers/classNames';
 import styles from './TextInput.module.scss';
 
 export interface TextInputProps {
-  variant?: 'form' | 'filter';
+  variant?: 'underlined' | 'bordered';
   icon?: ReactNode;
   placeholder?: string;
 }
 
 export const TextInput = memo((props: TextInputProps) => {
-  const { variant = 'form', icon, ...otherProps } = props;
-
-  const mods = {
-    [styles[`text-input_${variant}`]]: variant
-  };
+  const { variant = 'underlined', icon, ...otherProps } = props;
 
   return (
-    <div className={classNames(styles['text-input'], mods)}>
+    <div
+      className={classNames(
+        styles['text-input'],
+        styles[`text-input_${variant}`]
+      )}
+    >
       {icon && <div className={styles['text-input__icon']}>{icon}</div>}
       <input
         className={styles['text-input__field']}

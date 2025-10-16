@@ -68,11 +68,11 @@ export const CharacterInfo = () => {
           OptionRenderer={StatusOptionRenderer}
         />
         <TextInput
-          variant='filter'
+          variant='bordered'
           placeholder='Filter by name...'
           icon={<SearchIcon />}
         ></TextInput>
-        <TextInput variant='form'></TextInput>
+        <TextInput variant='underlined'></TextInput>
       </div>
     </div>
   );
