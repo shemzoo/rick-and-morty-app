@@ -1,4 +1,4 @@
-import cn from 'classnames';
+import { classNames } from '@/shared/helpers/classNames';
 
 import styles from './StatusIcon.module.scss';
 
@@ -9,8 +9,11 @@ interface IStatusIconProps {
   label?: string;
 }
 
-const StatusIcon = ({ status, label }: IStatusIconProps) => {
-  const statusClassName = cn(styles.statusIcon, styles[`statusIcon_${status}`]);
+export const StatusIcon = ({ status, label }: IStatusIconProps) => {
+  const statusClassName = classNames(
+    styles.statusIcon,
+    styles[`statusIcon_${status}`]
+  );
 
   if (label) {
     return (
@@ -24,4 +27,4 @@ const StatusIcon = ({ status, label }: IStatusIconProps) => {
   return <div className={statusClassName}></div>;
 };
 
-export default StatusIcon;
+

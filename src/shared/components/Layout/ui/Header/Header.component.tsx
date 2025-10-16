@@ -1,8 +1,8 @@
-import Logo from "@/components/Logo/Logo.component";
+import { Logo } from '@/shared/components';
 
-import styles from "./Header.module.scss";
+import styles from './Header.module.scss';
 
-const Header = () => {
+export const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.header__container}>
@@ -12,4 +12,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+

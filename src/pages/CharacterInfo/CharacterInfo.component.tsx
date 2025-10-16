@@ -1,34 +1,27 @@
 import { useState } from 'react';
+
 import { Link } from 'react-router-dom';
 
 import ArrowBackIcon from '@/assets/arrow-back.svg?react';
-import Loader from '@/components/Loader/Loader.component';
-import Selector from '@/components/Selector/Selector.component';
-import StatusIcon, {
-  type Status
-} from '@/components/StatusIcon/StatusIcon.component';
+import SearchIcon from '@/assets/search.svg?react';
+import { Loader, Selector, StatusIcon, TextInput, type Status } from '@/shared/components';
 
 import styles from './CharacterInfo.module.scss';
 
 interface StatusOptionRendererProps {
   option: { value: string; label: string };
-  size?: 'large' | 'small';
 }
 
-const StatusOptionRenderer = ({ option, size }: StatusOptionRendererProps) => {
-  if (size === 'small') {
-    return (
-      <StatusIcon
-        status={option.value as Status}
-        label={option.label}
-      />
-    );
-  }
-
-  return <span>{option.label}</span>;
+const StatusOptionRenderer = ({ option }: StatusOptionRendererProps) => {
+  return (
+    <StatusIcon
+      status={option.value as Status}
+      label={option.label}
+    />
+  );
 };
 
-const CharacterInfo = () => {
+export const CharacterInfo = () => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>();
   const [status, setStatus] = useState<Status | undefined>();
 
@@ -74,9 +67,13 @@ const CharacterInfo = () => {
           size='small'
           OptionRenderer={StatusOptionRenderer}
         />
+        <TextInput
+          variant='bordered'
+          placeholder='Filter by name...'
+          icon={<SearchIcon />}
+        ></TextInput>
+        <TextInput variant='underlined'></TextInput>
       </div>
     </div>
   );
 };
-
-export default CharacterInfo;

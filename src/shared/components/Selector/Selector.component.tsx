@@ -1,9 +1,8 @@
-import { useState, useRef, useEffect, type ComponentType } from 'react';
-
-import cn from 'classnames';
+import { type ComponentType, useEffect, useRef, useState } from 'react';
 
 import ArrowDownIcon from '@/assets/arrow-down.svg?react';
 import ArrowUpIcon from '@/assets/arrow-up.svg?react';
+import { classNames } from '@/shared/helpers/classNames';
 
 import styles from './Selector.module.scss';
 
@@ -14,7 +13,6 @@ interface Option {
 
 interface OptionRendererProps {
   option: Option;
-  size?: 'large' | 'small';
 }
 
 const DefaultOptionRenderer = ({ option }: OptionRendererProps) => {
@@ -30,7 +28,7 @@ export interface ISelectorProps {
   OptionRenderer?: ComponentType<OptionRendererProps>;
 }
 
-const Selector = ({
+export const Selector = ({
   options,
   label,
   size = 'large',
@@ -66,7 +64,10 @@ const Selector = ({
 
   const selectedOption = options.find((option) => option.value === value);
 
-  const selectorClassName = cn(styles.selector, styles[`selector_${size}`]);
+  const selectorClassName = classNames(
+    styles.selector,
+    styles[`selector_${size}`]
+  );
 
   return (
     <div
@@ -78,10 +79,7 @@ const Selector = ({
         onClick={() => setIsOpen(!isOpen)}
       >
         {selectedOption ? (
-          <OptionRenderer
-            option={selectedOption}
-            size={size}
-          />
+          <OptionRenderer option={selectedOption} />
         ) : (
           <span>{label}</span>
         )}
@@ -95,10 +93,7 @@ const Selector = ({
               className={styles.selector__option}
               onClick={() => handleSelect(option.value)}
             >
-              <OptionRenderer
-                option={option}
-                size={size}
-              />
+              <OptionRenderer option={option} />
             </li>
           ))}
         </ul>
@@ -107,4 +102,4 @@ const Selector = ({
   );
 };
 
-export default Selector;
+

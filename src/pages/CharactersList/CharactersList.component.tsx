@@ -1,10 +1,9 @@
 import logo from '@/assets/rick-and-morty-logo.png';
-
-import Loader from '@/components/Loader/Loader.component';
+import { Loader } from '@/shared/components';
 
 import styles from './CharactersList.module.scss';
 
-const CharactersList = () => {
+export const CharactersList = () => {
   return (
     <div className={styles.list}>
       <img
@@ -19,5 +18,3 @@ const CharactersList = () => {
     </div>
   );
 };
-
-export default CharactersList;
