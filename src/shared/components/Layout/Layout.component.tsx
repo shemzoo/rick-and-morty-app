@@ -1,11 +1,10 @@
 import { Outlet } from 'react-router-dom';
 
-import Footer from './ui/Footer/Footer.component';
-import Header from './ui/Header/Header.component';
+import { Footer, Header } from '@/shared/components';
 
 import styles from './Layout.module.scss';
 
-const Layout = () => {
+export const Layout = () => {
   return (
     <div className={styles.layout}>
       <Header />
@@ -19,4 +18,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+

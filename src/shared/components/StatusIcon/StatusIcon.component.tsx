@@ -9,7 +9,7 @@ interface IStatusIconProps {
   label?: string;
 }
 
-const StatusIcon = ({ status, label }: IStatusIconProps) => {
+export const StatusIcon = ({ status, label }: IStatusIconProps) => {
   const statusClassName = classNames(
     styles.statusIcon,
     styles[`statusIcon_${status}`]
@@ -27,4 +27,4 @@ const StatusIcon = ({ status, label }: IStatusIconProps) => {
   return <div className={statusClassName}></div>;
 };
 
-export default StatusIcon;
+

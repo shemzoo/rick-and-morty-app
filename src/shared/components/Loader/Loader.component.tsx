@@ -7,7 +7,7 @@ type LoaderProps =
   | { size: 'large'; text?: string }
   | { size: 'small'; text?: never };
 
-const Loader = ({ size, text }: LoaderProps) => {
+export const Loader = ({ size, text }: LoaderProps) => {
   const loaderClassName = classNames(styles.loader, styles[`loader_${size}`]);
 
   return (
@@ -24,4 +24,4 @@ const Loader = ({ size, text }: LoaderProps) => {
   );
 };
 
-export default Loader;
+

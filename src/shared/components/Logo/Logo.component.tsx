@@ -2,7 +2,7 @@ import logoImage from '@/assets/logo.png';
 
 import styles from './Logo.module.scss';
 
-const Logo = () => {
+export const Logo = () => {
   return (
     <a
       href='/'
@@ -17,4 +17,4 @@ const Logo = () => {
   );
 };
 
-export default Logo;
+

@@ -1,8 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
-import CharacterInfo from '@/pages/CharacterInfo/CharacterInfo.component';
-import CharactersList from '@/pages/CharactersList/CharactersList.component';
-import Layout from '@/shared/components/Layout/Layout.component';
+import { CharacterInfo, CharactersList } from '@/pages';
+import { Layout } from '@/shared/components';
 
 function App() {
   return (

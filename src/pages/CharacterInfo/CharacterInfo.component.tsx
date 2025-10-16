@@ -4,12 +4,7 @@ import { Link } from 'react-router-dom';
 
 import ArrowBackIcon from '@/assets/arrow-back.svg?react';
 import SearchIcon from '@/assets/search.svg?react';
-import Loader from '@/shared/components/Loader/Loader.component';
-import Selector from '@/shared/components/Selector/Selector.component';
-import StatusIcon, {
-  type Status
-} from '@/shared/components/StatusIcon/StatusIcon.component';
-import { TextInput } from '@/shared/components/TextInput/TextInput.component';
+import { Loader, Selector, StatusIcon, TextInput, type Status } from '@/shared/components';
 
 import styles from './CharacterInfo.module.scss';
 
@@ -26,7 +21,7 @@ const StatusOptionRenderer = ({ option }: StatusOptionRendererProps) => {
   );
 };
 
-const CharacterInfo = () => {
+export const CharacterInfo = () => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>();
   const [status, setStatus] = useState<Status | undefined>();
 
@@ -82,5 +77,3 @@ const CharacterInfo = () => {
     </div>
   );
 };
-
-export default CharacterInfo;

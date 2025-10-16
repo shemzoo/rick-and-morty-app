@@ -28,7 +28,7 @@ export interface ISelectorProps {
   OptionRenderer?: ComponentType<OptionRendererProps>;
 }
 
-const Selector = ({
+export const Selector = ({
   options,
   label,
   size = 'large',
@@ -102,4 +102,4 @@ const Selector = ({
   );
 };
 
-export default Selector;
+
