@@ -2,6 +2,7 @@
 
 .card {
   box-sizing: content-box;
+  font-family: Roboto, sans-serif;
   display: flex;
   width: 508px;
   background-color: $color-background;
@@ -47,7 +48,6 @@
   }
 
   &__name {
-    font-family: Roboto, sans-serif;
     font-weight: 500;
     font-size: 20px;
     line-height: 1.5;

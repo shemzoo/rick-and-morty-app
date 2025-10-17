@@ -37,7 +37,7 @@ export const CharacterInfo = () => {
     gender: 'Male',
     species: 'Human',
     location: 'Earth',
-    status: 'Unknown',
+    status: 'Alive',
     image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg'
   };
 

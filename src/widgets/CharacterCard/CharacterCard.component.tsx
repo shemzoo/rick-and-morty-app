@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 import EditIcon from '@/assets/edit-icon.svg?react';
-import { type Status, StatusIcon } from '@/shared/components/';
+import { StatusIcon } from '@/shared/components';
 
 import styles from './CharacterCard.module.scss';
 
@@ -54,7 +54,7 @@ export const CharacterCard: FC<ICharacterCardProps> = ({
           <p className={styles.card__label}>Status</p>
           <div className={styles.card__status}>
             <p className={styles.card__value}>{status}</p>
-            <StatusIcon status={status.toLowerCase() as Status} />
+            <StatusIcon status={status.toLowerCase()} />
           </div>
         </div>
       </div>

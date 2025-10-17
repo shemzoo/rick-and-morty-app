@@ -5,7 +5,7 @@ import styles from './StatusIcon.module.scss';
 export type Status = 'alive' | 'dead' | 'unknown';
 
 interface IStatusIconProps {
-  status: Status;
+  status: string;
   label?: string;
 }
 
@@ -26,5 +26,3 @@ export const StatusIcon = ({ status, label }: IStatusIconProps) => {
 
   return <div className={statusClassName}></div>;
 };
-
-
