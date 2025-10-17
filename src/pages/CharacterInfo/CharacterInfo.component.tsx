@@ -4,7 +4,14 @@ import { Link } from 'react-router-dom';
 
 import ArrowBackIcon from '@/assets/arrow-back.svg?react';
 import SearchIcon from '@/assets/search.svg?react';
-import { Loader, Selector, StatusIcon, TextInput, type Status } from '@/shared/components';
+import {
+  Loader,
+  Selector,
+  type Status,
+  StatusIcon,
+  TextInput
+} from '@/shared/components';
+import { CharacterCard, type ICharacter } from '@/widgets';
 
 import styles from './CharacterInfo.module.scss';
 
@@ -24,6 +31,15 @@ const StatusOptionRenderer = ({ option }: StatusOptionRendererProps) => {
 export const CharacterInfo = () => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>();
   const [status, setStatus] = useState<Status | undefined>();
+
+  const character: ICharacter = {
+    name: 'Rick Sanchez',
+    gender: 'Male',
+    species: 'Human',
+    location: 'Earth',
+    status: 'Unknown',
+    image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg'
+  };
 
   const options = [
     { value: '1', label: 'Human' },
@@ -52,6 +68,12 @@ export const CharacterInfo = () => {
         size='large'
         text='Loading character card...'
       />
+      <div style={{ marginTop: '20px', display: 'flex', gap: '20px' }}>
+        <CharacterCard
+          character={character}
+          mode='view'
+        />
+      </div>
       <div style={{ marginTop: '20px', display: 'flex', gap: '20px' }}>
         <Selector
           options={options}
