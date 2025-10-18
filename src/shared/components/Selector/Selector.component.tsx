@@ -6,45 +6,44 @@ import { classNames } from '@/shared/helpers/classNames';
 
 import styles from './Selector.module.scss';
 
-interface Option<TValue extends string> {
-  value: TValue;
+interface Option<T> {
+  value: T;
   label: string;
 }
 
-interface OptionRendererProps<TValue extends string> {
-  option: Option<TValue>;
+interface OptionRendererProps<T> {
+  option: Option<T>;
 }
 
-const DefaultOptionRenderer = <TValue extends string>({
-  option
-}: OptionRendererProps<TValue>) => {
+const DefaultOptionRenderer = <T,>({ option }: OptionRendererProps<T>) => {
   return <span>{option.label}</span>;
 };
 
-export interface ISelectorProps<TValue extends string> {
-  options: Option<TValue>[];
-  label: string;
+export interface ISelectorProps<T> {
+  value?: T;
+  options: Option<T>[];
+  placeholder: string;
   size?: 'large' | 'small';
-  onChange?: (value: TValue | undefined) => void;
-  value?: TValue;
-  OptionRenderer?: ComponentType<OptionRendererProps<TValue>>;
+  onChange?: (value: T) => void;
+  OptionRenderer?: ComponentType<OptionRendererProps<T>>;
 }
 
-export const Selector = <TValue extends string>({
+export const Selector = <T extends string | undefined>({
   options,
-  label,
+  placeholder,
   size = 'large',
   value,
   onChange,
   OptionRenderer = DefaultOptionRenderer
-}: ISelectorProps<TValue>) => {
+}: ISelectorProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectorRef = useRef<HTMLDivElement>(null);
 
-  const handleSelect = (selectedValue: TValue) => {
+  const handleSelect = (option: Option<T>) => {
     if (onChange) {
-      onChange(selectedValue);
+      onChange(option.value);
     }
+
     setIsOpen(false);
   };
 
@@ -59,6 +58,7 @@ export const Selector = <TValue extends string>({
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -83,17 +83,19 @@ export const Selector = <TValue extends string>({
         {selectedOption ? (
           <OptionRenderer option={selectedOption} />
         ) : (
-          <span>{label}</span>
+          placeholder
         )}
+
         {isOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
       </div>
+
       {isOpen && (
         <ul className={styles.selector__options}>
           {options.map((option) => (
             <li
               key={option.value}
               className={styles.selector__option}
-              onClick={() => handleSelect(option.value)}
+              onClick={() => handleSelect(option)}
             >
               <OptionRenderer option={option} />
             </li>
@@ -103,5 +105,3 @@ export const Selector = <TValue extends string>({
     </div>
   );
 };
-
-
