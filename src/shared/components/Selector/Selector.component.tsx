@@ -6,40 +6,42 @@ import { classNames } from '@/shared/helpers/classNames';
 
 import styles from './Selector.module.scss';
 
-interface Option {
-  value: string;
+interface Option<TValue extends string> {
+  value: TValue;
   label: string;
 }
 
-interface OptionRendererProps {
-  option: Option;
+interface OptionRendererProps<TValue extends string> {
+  option: Option<TValue>;
 }
 
-const DefaultOptionRenderer = ({ option }: OptionRendererProps) => {
+const DefaultOptionRenderer = <TValue extends string>({
+  option
+}: OptionRendererProps<TValue>) => {
   return <span>{option.label}</span>;
 };
 
-export interface ISelectorProps {
-  options: Option[];
+export interface ISelectorProps<TValue extends string> {
+  options: Option<TValue>[];
   label: string;
   size?: 'large' | 'small';
-  onChange?: (value: string | undefined) => void;
-  value?: string;
-  OptionRenderer?: ComponentType<OptionRendererProps>;
+  onChange?: (value: TValue | undefined) => void;
+  value?: TValue;
+  OptionRenderer?: ComponentType<OptionRendererProps<TValue>>;
 }
 
-export const Selector = ({
+export const Selector = <TValue extends string>({
   options,
   label,
   size = 'large',
   value,
   onChange,
   OptionRenderer = DefaultOptionRenderer
-}: ISelectorProps) => {
+}: ISelectorProps<TValue>) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectorRef = useRef<HTMLDivElement>(null);
 
-  const handleSelect = (selectedValue: string) => {
+  const handleSelect = (selectedValue: TValue) => {
     if (onChange) {
       onChange(selectedValue);
     }

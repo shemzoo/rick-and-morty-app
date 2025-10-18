@@ -4,13 +4,19 @@ import { Link } from 'react-router-dom';
 
 import ArrowBackIcon from '@/assets/arrow-back.svg?react';
 import SearchIcon from '@/assets/search.svg?react';
-import { Loader, Selector, StatusIcon, TextInput } from '@/shared/components';
+import {
+  Loader,
+  Selector,
+  type Status,
+  StatusIcon,
+  TextInput
+} from '@/shared/components';
 import { CharacterCard, type ICharacter } from '@/widgets';
 
 import styles from './CharacterInfo.module.scss';
 
 interface StatusOptionRendererProps {
-  option: { value: string; label: string };
+  option: { value: Status; label: string };
 }
 
 const StatusOptionRenderer = ({ option }: StatusOptionRendererProps) => {
@@ -24,14 +30,14 @@ const StatusOptionRenderer = ({ option }: StatusOptionRendererProps) => {
 
 export const CharacterInfo = () => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>();
-  const [status, setStatus] = useState<string | undefined>();
+  const [status, setStatus] = useState<Status | undefined>();
 
   const character: ICharacter = {
     name: 'Rick Sanchez',
     gender: 'Male',
     species: 'Human',
     location: 'Earth',
-    status: 'Alive',
+    status: 'Dead',
     image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg'
   };
 
@@ -43,7 +49,7 @@ export const CharacterInfo = () => {
     { value: '5', label: 'Robot' }
   ];
 
-  const statusOptions: { value: string; label: string }[] = [
+  const statusOptions: { value: Status; label: string }[] = [
     { value: 'alive', label: 'Alive' },
     { value: 'dead', label: 'Dead' },
     { value: 'unknown', label: 'Unknown' }
