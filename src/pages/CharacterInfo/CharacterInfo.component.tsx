@@ -4,13 +4,7 @@ import { Link } from 'react-router-dom';
 
 import ArrowBackIcon from '@/assets/arrow-back.svg?react';
 import SearchIcon from '@/assets/search.svg?react';
-import {
-  Loader,
-  Selector,
-  type Status,
-  StatusIcon,
-  TextInput
-} from '@/shared/components';
+import { Loader, Selector, StatusIcon, TextInput } from '@/shared/components';
 import { CharacterCard, type ICharacter } from '@/widgets';
 
 import styles from './CharacterInfo.module.scss';
@@ -22,7 +16,7 @@ interface StatusOptionRendererProps {
 const StatusOptionRenderer = ({ option }: StatusOptionRendererProps) => {
   return (
     <StatusIcon
-      status={option.value as Status}
+      status={option.value}
       label={option.label}
     />
   );
@@ -30,7 +24,7 @@ const StatusOptionRenderer = ({ option }: StatusOptionRendererProps) => {
 
 export const CharacterInfo = () => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>();
-  const [status, setStatus] = useState<Status | undefined>();
+  const [status, setStatus] = useState<string | undefined>();
 
   const character: ICharacter = {
     name: 'Rick Sanchez',
@@ -49,7 +43,7 @@ export const CharacterInfo = () => {
     { value: '5', label: 'Robot' }
   ];
 
-  const statusOptions: { value: Status; label: string }[] = [
+  const statusOptions: { value: string; label: string }[] = [
     { value: 'alive', label: 'Alive' },
     { value: 'dead', label: 'Dead' },
     { value: 'unknown', label: 'Unknown' }
@@ -85,7 +79,7 @@ export const CharacterInfo = () => {
           options={statusOptions}
           label='Status'
           value={status}
-          onChange={(value) => setStatus(value as Status)}
+          onChange={setStatus}
           size='small'
           OptionRenderer={StatusOptionRenderer}
         />
