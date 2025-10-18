@@ -6,43 +6,44 @@ import { classNames } from '@/shared/helpers/classNames';
 
 import styles from './Selector.module.scss';
 
-interface Option {
-  value: string;
+interface Option<T> {
+  value: T;
   label: string;
 }
 
-interface OptionRendererProps {
-  option: Option;
+interface OptionRendererProps<T> {
+  option: Option<T>;
 }
 
-const DefaultOptionRenderer = ({ option }: OptionRendererProps) => {
+const DefaultOptionRenderer = <T,>({ option }: OptionRendererProps<T>) => {
   return <span>{option.label}</span>;
 };
 
-export interface ISelectorProps {
-  options: Option[];
-  label: string;
+export interface ISelectorProps<T> {
+  value?: T;
+  options: Option<T>[];
+  placeholder: string;
   size?: 'large' | 'small';
-  onChange?: (value: string | undefined) => void;
-  value?: string;
-  OptionRenderer?: ComponentType<OptionRendererProps>;
+  onChange?: (value: T) => void;
+  OptionRenderer?: ComponentType<OptionRendererProps<T>>;
 }
 
-export const Selector = ({
+export const Selector = <T extends string | undefined>({
   options,
-  label,
+  placeholder,
   size = 'large',
   value,
   onChange,
   OptionRenderer = DefaultOptionRenderer
-}: ISelectorProps) => {
+}: ISelectorProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectorRef = useRef<HTMLDivElement>(null);
 
-  const handleSelect = (selectedValue: string) => {
+  const handleSelect = (option: Option<T>) => {
     if (onChange) {
-      onChange(selectedValue);
+      onChange(option.value);
     }
+
     setIsOpen(false);
   };
 
@@ -57,6 +58,7 @@ export const Selector = ({
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -81,17 +83,19 @@ export const Selector = ({
         {selectedOption ? (
           <OptionRenderer option={selectedOption} />
         ) : (
-          <span>{label}</span>
+          placeholder
         )}
+
         {isOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
       </div>
+
       {isOpen && (
         <ul className={styles.selector__options}>
           {options.map((option) => (
             <li
               key={option.value}
               className={styles.selector__option}
-              onClick={() => handleSelect(option.value)}
+              onClick={() => handleSelect(option)}
             >
               <OptionRenderer option={option} />
             </li>
@@ -101,5 +105,3 @@ export const Selector = ({
     </div>
   );
 };
-
-
