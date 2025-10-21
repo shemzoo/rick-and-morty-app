@@ -33,9 +33,9 @@ const options = [
 ];
 
 const statusOptions: { value: Status; label: string }[] = [
-  { value: 'alive', label: 'Alive' },
-  { value: 'dead', label: 'Dead' },
-  { value: 'unknown', label: 'Unknown' }
+  { value: 'Alive', label: 'Alive' },
+  { value: 'Dead', label: 'Dead' },
+  { value: 'Unknown', label: 'Unknown' }
 ];
 
 export const CharacterInfo = () => {
@@ -53,10 +53,7 @@ export const CharacterInfo = () => {
       </Link>
 
       <div style={{ marginTop: '20px', display: 'flex', gap: '20px' }}>
-        <CharacterCard
-          character={character}
-          mode='view'
-        />
+        <CharacterCard character={character} />
       </div>
       <div style={{ marginTop: '20px', display: 'flex', gap: '20px' }}>
         <Selector

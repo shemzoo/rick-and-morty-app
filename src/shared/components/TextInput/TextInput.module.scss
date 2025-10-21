@@ -10,7 +10,10 @@
     background: transparent;
     width: 100%;
     height: 100%;
-    font-family: 'Roboto', sans-serif;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
     color: rgba(0, 0, 0, 0.87);
   }
 
@@ -22,15 +25,8 @@
 
   // Variants
   &_underlined {
-    width: 208px;
-    height: 51px;
     background-color: transparent;
     border-bottom: 1px solid #000;
-
-    .text-input__field {
-      font-size: 20px;
-      font-weight: 500;
-    }
   }
 
   &_bordered {

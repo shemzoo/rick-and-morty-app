@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, type ChangeEvent } from 'react';
 import type { ReactNode } from 'react';
 
 import { classNames } from '@/shared/helpers/classNames';
@@ -9,6 +9,8 @@ export interface TextInputProps {
   variant?: 'underlined' | 'bordered';
   icon?: ReactNode;
   placeholder?: string;
+  value?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const TextInput = memo((props: TextInputProps) => {

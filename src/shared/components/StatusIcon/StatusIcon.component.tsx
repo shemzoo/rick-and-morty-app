@@ -2,7 +2,7 @@ import { classNames } from '@/shared/helpers/classNames';
 
 import styles from './StatusIcon.module.scss';
 
-export type Status = 'alive' | 'dead' | 'unknown';
+export type Status = 'Alive' | 'Dead' | 'Unknown';
 
 interface IStatusIconProps {
   status: Status;
@@ -11,7 +11,7 @@ interface IStatusIconProps {
 export const StatusIcon = ({ status }: IStatusIconProps) => {
   const statusClassName = classNames(
     styles.statusIcon,
-    styles[`statusIcon_${status}`]
+    styles[`statusIcon_${status.toLowerCase()}`]
   );
 
   return <div className={statusClassName}></div>;
