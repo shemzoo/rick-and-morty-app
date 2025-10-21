@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import CheckmarkIcon from '@/assets/checkmark-icon.svg?react';
 import CloseIcon from '@/assets/close-icon.svg?react';
 import EditIcon from '@/assets/edit-icon.svg?react';
-import { statusOptions } from '@/pages/CharactersList/CharactersList.component';
+import { statusOptions } from '@/pages/';
 import {
   Selector,
   type Status,

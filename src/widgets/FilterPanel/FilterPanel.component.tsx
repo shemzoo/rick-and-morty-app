@@ -1,9 +1,5 @@
 import SearchIcon from '@/assets/search.svg?react';
-import {
-  genderOptions,
-  speciesOptions,
-  statusOptions
-} from '@/pages/CharactersList/CharactersList.component';
+import { genderOptions, speciesOptions, statusOptions } from '@/pages/';
 import { Selector } from '@/shared/components/';
 import { TextInput } from '@/shared/components/';
 
