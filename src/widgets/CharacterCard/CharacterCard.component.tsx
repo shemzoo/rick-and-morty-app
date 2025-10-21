@@ -4,13 +4,15 @@ import type { FC } from 'react';
 import CheckmarkIcon from '@/assets/checkmark-icon.svg?react';
 import CloseIcon from '@/assets/close-icon.svg?react';
 import EditIcon from '@/assets/edit-icon.svg?react';
+import { statusOptions } from '@/pages/CharactersList/CharactersList.component';
 import {
   Selector,
   type Status,
   StatusIcon,
   TextInput
 } from '@/shared/components';
-import { classNames } from '@/shared/helpers/classNames';
+import { capitalize } from '@/shared/helpers';
+import { classNames } from '@/shared/helpers';
 
 import styles from './CharacterCard.module.scss';
 
@@ -26,12 +28,6 @@ export interface ICharacter {
 interface ICharacterCardProps {
   character: ICharacter;
 }
-
-const statusOptions: { value: Status; label: string }[] = [
-  { value: 'Alive', label: 'Alive' },
-  { value: 'Dead', label: 'Dead' },
-  { value: 'Unknown', label: 'Unknown' }
-];
 
 export const CharacterCard: FC<ICharacterCardProps> = ({ character }) => {
   const [mode, setMode] = useState<'view' | 'edit'>('view');
@@ -88,33 +84,15 @@ export const CharacterCard: FC<ICharacterCardProps> = ({ character }) => {
             />
           </div>
           <div className={styles.card__row}>
-            <p className={styles.card__label}>Gender</p>
-            <div
-              className={classNames(
-                styles.card__value,
-                styles.card__value_edit_input_gender
-              )}
-            >
-              <TextInput
-                value={gender}
-                onChange={(e) => handleInputChange('gender', e.target.value)}
-                variant='underlined'
-              />
+            <div className={styles.card__row}>
+              <p className={styles.card__label}>Gender</p>
+              <p className={styles.card__value}>{gender}</p>
             </div>
           </div>
           <div className={styles.card__row}>
-            <p className={styles.card__label}>Species</p>
-            <div
-              className={classNames(
-                styles.card__value,
-                styles.card__value_edit_input_species
-              )}
-            >
-              <TextInput
-                value={species}
-                onChange={(e) => handleInputChange('species', e.target.value)}
-                variant='underlined'
-              />
+            <div className={styles.card__row}>
+              <p className={styles.card__label}>Species</p>
+              <p className={styles.card__value}>{species}</p>
             </div>
           </div>
           <div className={styles.card__row}>
@@ -192,7 +170,7 @@ export const CharacterCard: FC<ICharacterCardProps> = ({ character }) => {
         <div className={styles.card__row}>
           <p className={styles.card__label}>Status</p>
           <div className={styles.card__status}>
-            <p className={styles.card__value}>{status}</p>
+            <p className={styles.card__value}>{capitalize(status)}</p>
             <StatusIcon status={status} />
           </div>
         </div>
