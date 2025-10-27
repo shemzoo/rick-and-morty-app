@@ -1,7 +1,6 @@
 import SearchIcon from '@/assets/search.svg?react';
-import { genderOptions, speciesOptions, statusOptions } from '@/pages/';
-import { Selector } from '@/shared/components/';
-import { TextInput } from '@/shared/components/';
+import { genderOptions, speciesOptions, statusOptions } from '@/pages';
+import { Selector, TextInput } from '@/shared/components';
 
 import styles from './FilterPanel.module.scss';
 
