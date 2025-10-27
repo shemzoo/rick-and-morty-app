@@ -4,23 +4,26 @@ import type { FC } from 'react';
 import CheckmarkIcon from '@/assets/checkmark-icon.svg?react';
 import CloseIcon from '@/assets/close-icon.svg?react';
 import EditIcon from '@/assets/edit-icon.svg?react';
-import { statusOptions } from '@/pages/';
+import { statusOptions } from '@/pages';
 import {
   Selector,
   type Status,
   StatusIcon,
   TextInput
 } from '@/shared/components';
-import { capitalize } from '@/shared/helpers';
-import { classNames } from '@/shared/helpers';
+import { capitalize, classNames } from '@/shared/helpers';
 
 import styles from './CharacterCard.module.scss';
 
 export interface ICharacter {
+  id: number;
   name: string;
   gender: string;
   species: string;
-  location: string;
+  location: {
+    name: string;
+    url: string;
+  };
   status: Status;
   image: string;
 }
@@ -50,7 +53,10 @@ export const CharacterCard: FC<ICharacterCardProps> = ({ character }) => {
     setMode('view');
   };
 
-  const handleInputChange = (field: keyof ICharacter, value: string) => {
+  const handleInputChange = (
+    field: keyof ICharacter,
+    value: string | { name: string; url: string }
+  ) => {
     setEditedCharacter((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -104,8 +110,13 @@ export const CharacterCard: FC<ICharacterCardProps> = ({ character }) => {
               )}
             >
               <TextInput
-                value={location}
-                onChange={(e) => handleInputChange('location', e.target.value)}
+                value={location.name}
+                onChange={(e) =>
+                  handleInputChange('location', {
+                    ...location,
+                    name: e.target.value
+                  })
+                }
                 variant='underlined'
               />
             </div>
@@ -165,7 +176,7 @@ export const CharacterCard: FC<ICharacterCardProps> = ({ character }) => {
         </div>
         <div className={styles.card__row}>
           <p className={styles.card__label}>Location</p>
-          <p className={styles.card__value}>{location}</p>
+          <p className={styles.card__value}>{location.name}</p>
         </div>
         <div className={styles.card__row}>
           <p className={styles.card__label}>Status</p>
