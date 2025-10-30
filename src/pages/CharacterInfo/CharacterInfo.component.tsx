@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import ArrowBackIcon from '@/assets/arrow-back.svg?react';
+import { ArrowBackIcon } from '@/assets';
 
 import styles from './CharacterInfo.module.scss';
 
