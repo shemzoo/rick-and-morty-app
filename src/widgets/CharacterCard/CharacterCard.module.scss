@@ -1,7 +1,8 @@
 @use '@/styles/variables' as *;
 
 .card {
-  box-sizing: content-box;
+  box-sizing: border-box;
+  height: 100%;
   font-family: Roboto, sans-serif;
   display: flex;
   background-color: $color-background;
