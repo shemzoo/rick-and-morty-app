@@ -1,8 +1,12 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+
 import toast from 'react-hot-toast';
+import { useSearchParams } from 'react-router-dom';
+
+import axios from 'axios';
 
 import { type ICharacter } from '@/widgets';
+
 import { useDebouncedEffect } from './useDebouncedEffect';
 
 export interface IFilters {
@@ -14,11 +18,36 @@ export interface IFilters {
 
 const DEBOUNCE_DELAY = 500;
 
-export const useCharacters = (filters: IFilters) => {
+export const useCharacters = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [filters, setFilters] = useState<IFilters>({
+    name: searchParams.get('name') || '',
+    status: searchParams.get('status') || '',
+    species: searchParams.get('species') || '',
+    gender: searchParams.get('gender') || ''
+  });
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [loading, setLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState('');
+  const [notFound, setNotFound] = useState(false);
+
+  const onFilterChange = (filterName: keyof IFilters, value: string) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterName]: value
+    }));
+  };
+
+  useEffect(() => {
+    const params: { [key: string]: string } = {};
+    if (filters.name) params.name = filters.name;
+    if (filters.status) params.status = filters.status;
+    if (filters.species) params.species = filters.species;
+    if (filters.gender) params.gender = filters.gender;
+    setSearchParams(params, { replace: true });
+  }, [filters, setSearchParams]);
 
   useDebouncedEffect(
     () => {
@@ -28,6 +57,7 @@ export const useCharacters = (filters: IFilters) => {
         try {
           setIsFetching(true);
           setError('');
+          setNotFound(false);
 
           const params = new URLSearchParams();
           if (filters.name) params.append('name', filters.name);
@@ -53,9 +83,14 @@ export const useCharacters = (filters: IFilters) => {
             console.log('Request canceled', error.message);
             return;
           }
-          setCharacters([]); // Clear characters on error
-          setError('Не удалось загрузить список персонажей');
-          toast.error('Персонажи с такими параметрами не найдены');
+          setCharacters([]);
+          if (axios.isAxiosError(error)) {
+            setNotFound(true);
+          } else {
+            const errorMessage = 'Не удалось загрузить список персонажей';
+            setError(errorMessage);
+            toast.error(errorMessage);
+          }
         } finally {
           setLoading(false);
           setIsFetching(false);
@@ -72,5 +107,13 @@ export const useCharacters = (filters: IFilters) => {
     DEBOUNCE_DELAY
   );
 
-  return { characters, loading, isFetching, error };
+  return {
+    characters,
+    loading,
+    isFetching,
+    error,
+    filters,
+    onFilterChange,
+    notFound
+  };
 };

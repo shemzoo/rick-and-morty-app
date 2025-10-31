@@ -1,5 +1,3 @@
-import { type ChangeEvent } from 'react';
-
 import { SearchIcon } from '@/assets/';
 import { type IFilters } from '@/hooks';
 import { genderOptions, speciesOptions, statusOptions } from '@/pages';
@@ -21,9 +19,7 @@ export const FilterPanel = ({ filters, onFilterChange }: FilterPanelProps) => {
           placeholder='Search by name'
           icon={<SearchIcon />}
           value={filters.name}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onFilterChange('name', e.target.value)
-          }
+          onChange={(value) => onFilterChange('name', value)}
         />
       </div>
       <div className={styles.filterPanel__item}>
