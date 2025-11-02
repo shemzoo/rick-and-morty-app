@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
-
-import toast from 'react-hot-toast';
-
-import axios from 'axios';
+import { Toaster } from 'react-hot-toast';
 
 import logo from '@/assets/rick-and-morty-logo.png';
+import { useCharacters } from '@/hooks';
 import { Loader, type Status } from '@/shared/components';
-import { CharacterCard, FilterPanel, type ICharacter } from '@/widgets';
+import { classNames } from '@/shared/helpers';
+import { CharacterCard, FilterPanel } from '@/widgets';
 
 import styles from './CharactersList.module.scss';
 
@@ -36,50 +34,45 @@ export const genderOptions = [
 ];
 
 export const CharactersList = () => {
-  const [characters, setCharacters] = useState<ICharacter[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const { characters, loading, isFetching, filters, onFilterChange, notFound } =
+    useCharacters();
 
-  useEffect(() => {
-    const abortController = new AbortController();
+  const renderContent = () => {
+    if (loading) {
+      return (
+        <Loader
+          size='large'
+          text='Loading characters...'
+        />
+      );
+    }
 
-    const fetchCharacters = async () => {
-      try {
-        setLoading(true);
+    if (notFound) {
+      return (
+        <div className={styles.list__message}>
+          <p>Персонажи с такими параметрами не найдены</p>
+        </div>
+      );
+    }
 
-        const response = await axios.get(
-          'https://rickandmortyapi.com/api/character',
-          { signal: abortController.signal }
-        );
-
-        const transformedCharacters = response.data.results.map(
-          (character: { status: string }) => ({
-            ...character,
-            status: character.status.toLowerCase()
-          })
-        );
-
-        setCharacters(transformedCharacters);
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          console.log('Request canceled', error.message);
-          return;
-        }
-        setError('Не удалось загрузить список персонажей');
-        toast.error('Не удалось загрузить список персонажей');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCharacters();
-
-    return () => {
-      abortController.abort();
-    };
-  }, []);
+    return (
+      <ul
+        className={classNames(styles.list__items, {
+          [styles.list__items_fetching]: isFetching
+        })}
+      >
+        {characters.map((character) => (
+          <li key={character.id}>
+            <CharacterCard character={character} />
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   return (
     <>
+      <Toaster position='bottom-right' />
       <div className={styles.list}>
         <img
           className={styles.list__logo}
@@ -87,22 +80,11 @@ export const CharactersList = () => {
           alt='Rick and Morty Logo'
         />
       </div>
-      <FilterPanel />
-      {loading ? (
-        <Loader
-          size='large'
-          text='Loading characters...'
-        />
-      ) : (
-        <div className={styles.list__items}>
-          {characters.map((character) => (
-            <CharacterCard
-              key={character.id}
-              character={character}
-            />
-          ))}
-        </div>
-      )}
+      <FilterPanel
+        filters={filters}
+        onFilterChange={onFilterChange}
+      />
+      {renderContent()}
     </>
   );
 };

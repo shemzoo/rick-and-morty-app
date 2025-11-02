@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { FC } from 'react';
 
-import CheckmarkIcon from '@/assets/checkmark-icon.svg?react';
-import CloseIcon from '@/assets/close-icon.svg?react';
-import EditIcon from '@/assets/edit-icon.svg?react';
+import { CheckmarkIcon, CloseIcon, EditIcon } from '@/assets';
 import { statusOptions } from '@/pages';
 import {
   Selector,

@@ -10,11 +10,15 @@ export interface TextInputProps {
   icon?: ReactNode;
   placeholder?: string;
   value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (value: string) => void;
 }
 
 export const TextInput = memo((props: TextInputProps) => {
-  const { variant = 'underlined', icon, ...otherProps } = props;
+  const { variant = 'underlined', icon, onChange, ...otherProps } = props;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e.target.value);
+  };
 
   return (
     <div
@@ -26,6 +30,7 @@ export const TextInput = memo((props: TextInputProps) => {
       {icon && <div className={styles['text-input__icon']}>{icon}</div>}
       <input
         className={styles['text-input__field']}
+        onChange={handleChange}
         {...otherProps}
       />
     </div>
