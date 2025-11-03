@@ -30,10 +30,18 @@
     }
   }
 
+  &__loader {
+    grid-column: 1 / -1;
+  }
+
   &__message {
     margin-top: 40px;
     font-size: 24px;
     color: #333;
     text-align: center;
+  }
+
+  &__loader {
+    grid-column: '1 / -1';
   }
 }

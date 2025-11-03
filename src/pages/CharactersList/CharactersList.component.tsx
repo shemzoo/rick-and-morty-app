@@ -4,7 +4,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import logo from '@/assets/rick-and-morty-logo.png';
 import { useCharacters } from '@/hooks';
 import { Loader, type Status } from '@/shared/components';
-import { classNames } from '@/shared/helpers';
 import { CharacterCard, FilterPanel } from '@/widgets';
 
 import styles from './CharactersList.module.scss';
@@ -68,7 +67,11 @@ export const CharactersList = () => {
         dataLength={characters.length}
         next={fetchNextPage}
         hasMore={hasNextPage}
-        loader={<Loader size='small' />}
+        loader={
+          <div className={styles.list__loader}>
+            <Loader size='small' />
+          </div>
+        }
         style={{ overflow: 'visible' }}
         endMessage={
           <p>
