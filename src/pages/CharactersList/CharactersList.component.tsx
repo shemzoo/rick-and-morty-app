@@ -1,4 +1,5 @@
 import { Toaster } from 'react-hot-toast';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import logo from '@/assets/rick-and-morty-logo.png';
 import { useCharacters } from '@/hooks';
@@ -34,8 +35,15 @@ export const genderOptions = [
 ];
 
 export const CharactersList = () => {
-  const { characters, loading, isFetching, filters, onFilterChange, notFound } =
-    useCharacters();
+  const {
+    characters,
+    loading,
+    filters,
+    onFilterChange,
+    notFound,
+    fetchNextPage,
+    hasNextPage
+  } = useCharacters();
 
   const renderContent = () => {
     if (loading) {
@@ -56,17 +64,27 @@ export const CharactersList = () => {
     }
 
     return (
-      <ul
-        className={classNames(styles.list__items, {
-          [styles.list__items_fetching]: isFetching
-        })}
+      <InfiniteScroll
+        dataLength={characters.length}
+        next={fetchNextPage}
+        hasMore={hasNextPage}
+        loader={<Loader size='small' />}
+        style={{ overflow: 'visible' }}
+        endMessage={
+          <p>
+            <b>Конец списка персонажей</b>
+          </p>
+        }
+        className={styles.list__items}
       >
-        {characters.map((character) => (
-          <li key={character.id}>
-            <CharacterCard character={character} />
-          </li>
-        ))}
-      </ul>
+        <ul>
+          {characters.map((character) => (
+            <li key={character.id}>
+              <CharacterCard character={character} />
+            </li>
+          ))}
+        </ul>
+      </InfiniteScroll>
     );
   };
 
