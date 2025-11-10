@@ -41,7 +41,8 @@ export const CharactersList = () => {
     onFilterChange,
     notFound,
     fetchNextPage,
-    hasNextPage
+    hasNextPage,
+    updateCharacter
   } = useCharacters();
 
   const renderContent = () => {
@@ -74,7 +75,7 @@ export const CharactersList = () => {
         }
         style={{ overflow: 'visible' }}
         endMessage={
-          <p>
+          <p className={styles['list__end-message']}>
             <b>Конец списка персонажей</b>
           </p>
         }
@@ -83,7 +84,10 @@ export const CharactersList = () => {
         <ul>
           {characters.map((character) => (
             <li key={character.id}>
-              <CharacterCard character={character} />
+              <CharacterCard
+                character={character}
+                onUpdate={updateCharacter}
+              />
             </li>
           ))}
         </ul>
