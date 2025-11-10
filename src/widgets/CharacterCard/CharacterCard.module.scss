@@ -65,6 +65,11 @@
     }
   }
 
+  &__link {
+    text-decoration: none;
+    color: inherit;
+  }
+
   &__row {
     display: flex;
     flex-direction: column;

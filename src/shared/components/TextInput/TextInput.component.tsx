@@ -1,7 +1,7 @@
-import { memo, type ChangeEvent } from 'react';
+import { type ChangeEvent, memo } from 'react';
 import type { ReactNode } from 'react';
 
-import { classNames } from '@/shared/helpers/classNames';
+import { classNames } from '@/shared/helpers';
 
 import styles from './TextInput.module.scss';
 

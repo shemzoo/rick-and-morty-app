@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import axios, { AxiosError } from 'axios';
 
-import { type ICharacter } from '@/widgets';
+import { type ICharacter } from '@/shared/types';
 
 import { useDebouncedEffect } from './useDebouncedEffect';
 
@@ -107,16 +107,24 @@ export const useCharacters = () => {
       if (filters.species) params.species = filters.species;
       if (filters.gender) params.gender = filters.gender;
 
-      const searchParams = params;
+      const searchParams = new URLSearchParams(params);
 
       const newUrl = `${API_URL}?${searchParams.toString()}`;
       fetchCharacters(newUrl);
 
-      setSearchParams(searchParams, { replace: true });
+      setSearchParams(params, { replace: true });
     },
     [filters],
     DEBOUNCE_DELAY
   );
+
+  const updateCharacter = useCallback((updatedCharacter: ICharacter) => {
+    setCharacters((prevCharacters) =>
+      prevCharacters.map((character) =>
+        character.id === updatedCharacter.id ? updatedCharacter : character
+      )
+    );
+  }, []);
 
   return {
     characters,
@@ -127,6 +135,7 @@ export const useCharacters = () => {
     onFilterChange,
     notFound,
     fetchNextPage,
-    hasNextPage
+    hasNextPage,
+    updateCharacter
   };
 };
