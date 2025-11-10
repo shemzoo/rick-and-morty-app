@@ -75,7 +75,7 @@ export const CharactersList = () => {
         }
         style={{ overflow: 'visible' }}
         endMessage={
-          <p className={styles.list__endMessage}>
+          <p className={styles['list__end-message']}>
             <b>Конец списка персонажей</b>
           </p>
         }

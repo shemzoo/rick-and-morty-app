@@ -12,7 +12,7 @@ import {
   TextInput
 } from '@/shared/components';
 import { capitalize, classNames } from '@/shared/helpers';
-import { type ICharacter } from '@/shared/types/character';
+import { type ICharacter } from '@/shared/types';
 
 import styles from './CharacterCard.module.scss';
 
