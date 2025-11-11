@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowBackIcon } from '@/assets';
 import { useCharacter } from '@/hooks';
 import { Loader } from '@/shared/components';
+import { capitalize } from '@/shared/helpers';
 
 import styles from './CharacterInfo.module.scss';
 
@@ -31,7 +32,7 @@ export const CharacterInfo = () => {
     { label: 'Gender', value: character.gender },
     { label: 'Status', value: character.status },
     { label: 'Specie', value: character.species },
-    { label: 'Origin', value: character.origin.name },
+    { label: 'Origin', value: capitalize(character.origin.name) },
     { label: 'Type', value: character.type || 'Unknown' },
     { label: 'Location', value: character.location.name }
   ];
