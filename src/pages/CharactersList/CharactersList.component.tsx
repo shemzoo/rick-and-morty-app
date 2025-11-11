@@ -21,7 +21,7 @@ export const speciesOptions = [
   { value: 'animal', label: 'Animal' },
   { value: 'robot', label: 'Robot' },
   { value: 'cronenberg', label: 'Cronenberg' },
-  { value: 'mythology', label: 'Mythology' },
+  { value: 'mythological creature', label: 'Mythological Creature' },
   { value: 'disease', label: 'Disease' },
   { value: 'unknown', label: 'Unknown' }
 ];

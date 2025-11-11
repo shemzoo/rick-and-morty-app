@@ -9,7 +9,7 @@ export const Layout = () => {
     <div className={styles.layout}>
       <Header />
       <main className={styles.layout__main}>
-        <div className={styles.layout__mainContainer}>
+        <div className={styles['layout__main-container']}>
           <Outlet />
         </div>
       </main>

@@ -10,8 +10,8 @@ interface IStatusIconProps {
 
 export const StatusIcon = ({ status }: IStatusIconProps) => {
   const statusClassName = classNames(
-    styles.statusIcon,
-    styles[`statusIcon_${status}`]
+    styles['status-icon'],
+    styles[`status-icon_${status}`]
   );
 
   return <div className={statusClassName}></div>;

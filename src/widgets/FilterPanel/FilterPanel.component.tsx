@@ -12,8 +12,8 @@ interface FilterPanelProps {
 
 export const FilterPanel = ({ filters, onFilterChange }: FilterPanelProps) => {
   return (
-    <div className={styles.filterPanel}>
-      <div className={styles.filterPanel__item}>
+    <div className={styles['filter-panel']}>
+      <div className={styles['filter-panel__item']}>
         <TextInput
           variant='bordered'
           placeholder='Search by name'
@@ -22,7 +22,7 @@ export const FilterPanel = ({ filters, onFilterChange }: FilterPanelProps) => {
           onChange={(value) => onFilterChange('name', value)}
         />
       </div>
-      <div className={styles.filterPanel__item}>
+      <div className={styles['filter-panel__item']}>
         <Selector
           size='large'
           placeholder='Species'
@@ -31,7 +31,7 @@ export const FilterPanel = ({ filters, onFilterChange }: FilterPanelProps) => {
           onChange={(value) => onFilterChange('species', value)}
         />
       </div>
-      <div className={styles.filterPanel__item}>
+      <div className={styles['filter-panel__item']}>
         <Selector
           size='large'
           placeholder='Gender'
@@ -40,7 +40,7 @@ export const FilterPanel = ({ filters, onFilterChange }: FilterPanelProps) => {
           onChange={(value) => onFilterChange('gender', value)}
         />
       </div>
-      <div className={styles.filterPanel__item}>
+      <div className={styles['filter-panel__item']}>
         <Selector
           size='large'
           placeholder='Status'
