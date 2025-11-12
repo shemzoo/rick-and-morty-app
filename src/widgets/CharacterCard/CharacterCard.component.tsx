@@ -5,12 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { CheckmarkIcon, CloseIcon, EditIcon } from '@/assets';
 import { statusOptions } from '@/pages';
-import {
-  Selector,
-  type Status,
-  StatusIcon,
-  TextInput
-} from '@/shared/components';
+import { Selector, StatusIcon, TextInput } from '@/shared/components';
 import { capitalize, classNames } from '@/shared/helpers';
 import { type ICharacter } from '@/shared/types';
 
