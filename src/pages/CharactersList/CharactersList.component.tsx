@@ -3,7 +3,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import logo from '@/assets/rick-and-morty-logo.png';
 import { useCharacters } from '@/hooks';
-import { Loader, type Status } from '@/shared/components';
+import { Loader } from '@/shared/components';
+import { type Status } from '@/shared/types';
 import { CharacterCard, FilterPanel } from '@/widgets';
 
 import styles from './CharactersList.module.scss';

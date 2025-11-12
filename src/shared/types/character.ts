@@ -1,4 +1,4 @@
-import { type Status } from '@/shared/components';
+import { type Status } from '@/shared/types';
 
 export interface ICharacter {
   id: number;

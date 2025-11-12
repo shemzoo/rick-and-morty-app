@@ -1,5 +1,5 @@
 import { SearchIcon } from '@/assets/';
-import { type IFilters } from '@/hooks';
+import { type IFilters } from '@/shared/types';
 import { genderOptions, speciesOptions, statusOptions } from '@/pages';
 import { Selector, TextInput } from '@/shared/components';
 

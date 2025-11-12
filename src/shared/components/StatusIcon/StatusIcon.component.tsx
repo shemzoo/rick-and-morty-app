@@ -1,8 +1,9 @@
 import { classNames } from '@/shared/helpers/classNames';
 
+import { type Status } from '@/shared/types';
+
 import styles from './StatusIcon.module.scss';
 
-export type Status = 'alive' | 'dead' | 'unknown';
 
 interface IStatusIconProps {
   status: Status;

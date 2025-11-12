@@ -5,16 +5,9 @@ import { useSearchParams } from 'react-router-dom';
 
 import axios, { AxiosError } from 'axios';
 
-import { type ICharacter } from '@/shared/types';
+import { type ICharacter, type IFilters } from '@/shared/types';
 
 import { useDebouncedEffect } from './useDebouncedEffect';
-
-export interface IFilters {
-  name: string;
-  status: string;
-  species: string;
-  gender: string;
-}
 
 const DEBOUNCE_DELAY = 500;
 const API_URL = 'https://rickandmortyapi.com/api/character';
@@ -75,7 +68,7 @@ export const useCharacters = () => {
       } catch (err) {
         setCharacters([]);
         setNextPage(null);
-        if (err instanceof AxiosError && err.response?.status === 404) {
+        if (err instanceof AxiosError && (err.response?.status === 404 || !err.response)) {
           setNotFound(true);
         } else {
           const errorMessage = 'Не удалось загрузить список персонажей';
