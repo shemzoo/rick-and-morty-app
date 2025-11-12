@@ -1,5 +1,6 @@
 {
   "name": "rick-and-morty-app",
+  "homepage": "https://shemzoo.github.io/rick-and-morty-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +9,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@types/react-infinite-scroll-component": "^4.2.5",
@@ -24,6 +27,7 @@
     "@eslint/js": "^9.33.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/classnames": "^2.3.0",
+    "@types/node": "^24.10.1",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",
@@ -33,6 +37,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "gh-pages": "^6.3.0",
     "globals": "^16.3.0",
     "prettier": "^3.6.2",
     "sass": "^1.90.0",
