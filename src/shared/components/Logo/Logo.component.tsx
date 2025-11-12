@@ -5,7 +5,7 @@ import styles from './Logo.module.scss';
 export const Logo = () => {
   return (
     <a
-      href='/'
+      href='/rick-and-morty-app'
       className={styles.logo}
     >
       <img
@@ -16,5 +16,3 @@ export const Logo = () => {
     </a>
   );
 };
-
-
