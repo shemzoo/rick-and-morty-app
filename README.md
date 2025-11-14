@@ -32,7 +32,7 @@ https://shemzoo.github.io/rick-and-morty-app/
   - [React Router](https://reactrouter.com/)
 - **Получение данных:**
   - [Axios](https://axios-http.com/)
-- **UI-компоненты:**
+- **Библиотеки:**
   - [react-infinite-scroll-component](https://github.com/ankeetmaini/react-infinite-scroll-component) для бесконечной прокрутки.
   - [react-hot-toast](https://react-hot-toast.com/) для уведомлений.
 - **Качество кода:**
