@@ -10,7 +10,9 @@ import './index.scss';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename='/rick-and-morty-app'>
+    <BrowserRouter
+      basename={import.meta.env.PROD ? '/rick-and-morty-app' : '/'}
+    >
       <Toaster position='bottom-right' />
       <App />
     </BrowserRouter>

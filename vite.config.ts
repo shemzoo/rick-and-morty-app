@@ -6,7 +6,7 @@ import svgr from 'vite-plugin-svgr';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
-  base: '/rick-and-morty-app/',
+  base: process.env.NODE_ENV === 'production' ? '/rick-and-morty-app/' : '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
