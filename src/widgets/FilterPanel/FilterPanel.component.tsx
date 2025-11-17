@@ -1,16 +1,21 @@
 import { SearchIcon } from '@/assets/';
-import { type IFilters } from '@/shared/types';
 import { genderOptions, speciesOptions, statusOptions } from '@/pages';
 import { Selector, TextInput } from '@/shared/components';
+import { type IFilters } from '@/shared/types';
 
 import styles from './FilterPanel.module.scss';
 
 interface FilterPanelProps {
   filters: IFilters;
   onFilterChange: (name: keyof IFilters, value: string) => void;
+  onNameChange: (value: string) => void;
 }
 
-export const FilterPanel = ({ filters, onFilterChange }: FilterPanelProps) => {
+export const FilterPanel = ({
+  filters,
+  onFilterChange,
+  onNameChange
+}: FilterPanelProps) => {
   return (
     <div className={styles['filter-panel']}>
       <div className={styles['filter-panel__item']}>
@@ -19,7 +24,7 @@ export const FilterPanel = ({ filters, onFilterChange }: FilterPanelProps) => {
           placeholder='Search by name'
           icon={<SearchIcon />}
           value={filters.name}
-          onChange={(value) => onFilterChange('name', value)}
+          onChange={(value) => onNameChange(value)}
         />
       </div>
       <div className={styles['filter-panel__item']}>
