@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react';
-
+import { useCallback, useEffect, useState, useTransition } from 'react';
 import toast from 'react-hot-toast';
 import { useSearchParams } from 'react-router-dom';
 
@@ -14,6 +13,7 @@ const API_URL = 'https://rickandmortyapi.com/api/character';
 
 export const useCharacters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
   const [filters, setFilters] = useState<IFilters>({
     name: searchParams.get('name') || '',
@@ -29,6 +29,15 @@ export const useCharacters = () => {
   const [notFound, setNotFound] = useState(false);
   const [nextPage, setNextPage] = useState<string | null>(null);
 
+  const onNameChange = (value: string) => {
+    startTransition(() => {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        name: value
+      }));
+    });
+  };
+
   const onFilterChange = (filterName: keyof IFilters, value: string) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -39,14 +48,19 @@ export const useCharacters = () => {
   const hasNextPage = !!nextPage;
 
   const fetchCharacters = useCallback(
-    async (url: string, isLoadMore = false) => {
-      if (!isLoadMore) {
+    async (
+      url: string,
+      options: { isLoadMore?: boolean; isTransition?: boolean } = {}
+    ) => {
+      const { isLoadMore, isTransition } = options;
+
+      if (!isLoadMore && !isTransition) {
         setLoading(true);
-      } else {
-        setIsFetchingNextPage(true);
       }
-      setError('');
-      setNotFound(false);
+      if (!isLoadMore) {
+        setError('');
+        setNotFound(false);
+      }
 
       try {
         const response = await axios.get(url);
@@ -68,7 +82,10 @@ export const useCharacters = () => {
       } catch (err) {
         setCharacters([]);
         setNextPage(null);
-        if (err instanceof AxiosError && (err.response?.status === 404 || !err.response)) {
+        if (
+          err instanceof AxiosError &&
+          (err.response?.status === 404 || !err.response)
+        ) {
           setNotFound(true);
         } else {
           const errorMessage = 'Не удалось загрузить список персонажей';
@@ -76,9 +93,10 @@ export const useCharacters = () => {
           toast.error(errorMessage);
         }
       } finally {
-        if (!isLoadMore) {
+        if (!isLoadMore && !isTransition) {
           setLoading(false);
-        } else {
+        }
+        if (isLoadMore) {
           setIsFetchingNextPage(false);
         }
       }
@@ -88,9 +106,24 @@ export const useCharacters = () => {
 
   const fetchNextPage = useCallback(() => {
     if (nextPage && !isFetchingNextPage) {
-      fetchCharacters(nextPage, true);
+      fetchCharacters(nextPage, { isLoadMore: true });
     }
   }, [nextPage, isFetchingNextPage, fetchCharacters]);
+
+  useEffect(() => {
+    const params: { [key: string]: string } = {};
+    if (filters.name) params.name = filters.name;
+    if (filters.status) params.status = filters.status;
+    if (filters.gender) params.gender = filters.gender;
+    if (filters.species) params.species = filters.species;
+
+    const searchParams = new URLSearchParams(params);
+    const newUrl = `${API_URL}?${searchParams.toString()}`;
+
+    fetchCharacters(newUrl, { isTransition: true });
+
+    setSearchParams(params, { replace: true });
+  }, [filters.name]);
 
   useDebouncedEffect(
     () => {
@@ -101,13 +134,13 @@ export const useCharacters = () => {
       if (filters.gender) params.gender = filters.gender;
 
       const searchParams = new URLSearchParams(params);
-
       const newUrl = `${API_URL}?${searchParams.toString()}`;
+
       fetchCharacters(newUrl);
 
       setSearchParams(params, { replace: true });
     },
-    [filters],
+    [filters.status, filters.species, filters.gender],
     DEBOUNCE_DELAY
   );
 
@@ -121,10 +154,12 @@ export const useCharacters = () => {
 
   return {
     characters,
-    loading,
+    loading: loading && !isPending,
+    isPending,
     isFetchingNextPage,
     error,
     filters,
+    onNameChange,
     onFilterChange,
     notFound,
     fetchNextPage,

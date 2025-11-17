@@ -9,9 +9,6 @@
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 7px;
   position: relative;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  white-space: normal;
 
   &__icons {
     position: absolute;
@@ -71,6 +68,10 @@
   &__link {
     text-decoration: none;
     color: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
   }
 
   &__row {
@@ -92,6 +93,10 @@
     font-size: 14px;
     color: rgba(0, 0, 0, 0.6);
     max-width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
   }
 
   &__status {

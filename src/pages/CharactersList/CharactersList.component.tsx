@@ -38,8 +38,10 @@ export const CharactersList = () => {
   const {
     characters,
     loading,
+    isPending,
     filters,
     onFilterChange,
+    onNameChange,
     notFound,
     fetchNextPage,
     hasNextPage,
@@ -109,8 +111,9 @@ export const CharactersList = () => {
       <FilterPanel
         filters={filters}
         onFilterChange={onFilterChange}
+        onNameChange={onNameChange}
       />
-      {renderContent()}
+      <div style={{ opacity: isPending ? 0.6 : 1 }}>{renderContent()}</div>
     </>
   );
 };
