@@ -1,21 +1,17 @@
-import { SearchIcon } from '@/assets/';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { SearchIcon } from '@/assets';
 import { genderOptions, speciesOptions, statusOptions } from '@/pages';
 import { Selector, TextInput } from '@/shared/components';
-import { type IFilters } from '@/shared/types';
+import { setGender, setName, setSpecies, setStatus } from '@/stores/filters';
+import { type AppDispatch, type RootState } from '@/stores/store';
 
 import styles from './FilterPanel.module.scss';
 
-interface FilterPanelProps {
-  filters: IFilters;
-  onFilterChange: (name: keyof IFilters, value: string) => void;
-  onNameChange: (value: string) => void;
-}
+export const FilterPanel = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const filters = useSelector((state: RootState) => state.filters);
 
-export const FilterPanel = ({
-  filters,
-  onFilterChange,
-  onNameChange
-}: FilterPanelProps) => {
   return (
     <div className={styles['filter-panel']}>
       <div className={styles['filter-panel__item']}>
@@ -24,7 +20,7 @@ export const FilterPanel = ({
           placeholder='Search by name'
           icon={<SearchIcon />}
           value={filters.name}
-          onChange={(value) => onNameChange(value)}
+          onChange={(value) => dispatch(setName(value))}
         />
       </div>
       <div className={styles['filter-panel__item']}>
@@ -33,7 +29,7 @@ export const FilterPanel = ({
           placeholder='Species'
           options={speciesOptions}
           value={filters.species}
-          onChange={(value) => onFilterChange('species', value)}
+          onChange={(value) => dispatch(setSpecies(value))}
         />
       </div>
       <div className={styles['filter-panel__item']}>
@@ -42,7 +38,7 @@ export const FilterPanel = ({
           placeholder='Gender'
           options={genderOptions}
           value={filters.gender}
-          onChange={(value) => onFilterChange('gender', value)}
+          onChange={(value) => dispatch(setGender(value))}
         />
       </div>
       <div className={styles['filter-panel__item']}>
@@ -51,7 +47,7 @@ export const FilterPanel = ({
           placeholder='Status'
           options={statusOptions}
           value={filters.status}
-          onChange={(value) => onFilterChange('status', value)}
+          onChange={(value) => dispatch(setStatus(value))}
         />
       </div>
     </div>

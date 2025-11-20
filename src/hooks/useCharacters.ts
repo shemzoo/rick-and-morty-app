@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useState, useTransition } from 'react';
+
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import axios, { AxiosError } from 'axios';
 
-import { type ICharacter, type IFilters } from '@/shared/types';
+import { type ICharacter } from '@/shared/types';
+import { type RootState } from '@/stores/store';
 
 import { useDebouncedEffect } from './useDebouncedEffect';
 
@@ -12,15 +15,10 @@ const DEBOUNCE_DELAY = 500;
 const API_URL = 'https://rickandmortyapi.com/api/character';
 
 export const useCharacters = () => {
+  const filters = useSelector((state: RootState) => state.filters);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [isPending, startTransition] = useTransition();
-
-  const [filters, setFilters] = useState<IFilters>({
-    name: searchParams.get('name') || '',
-    status: searchParams.get('status') || '',
-    species: searchParams.get('species') || '',
-    gender: searchParams.get('gender') || ''
-  });
 
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,50 +27,29 @@ export const useCharacters = () => {
   const [notFound, setNotFound] = useState(false);
   const [nextPage, setNextPage] = useState<string | null>(null);
 
-  const onNameChange = (value: string) => {
-    startTransition(() => {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        name: value
-      }));
-    });
-  };
-
-  const onFilterChange = (filterName: keyof IFilters, value: string) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterName]: value
-    }));
-  };
-
   const hasNextPage = !!nextPage;
 
   const fetchCharacters = useCallback(
-    async (
-      url: string,
-      options: { isLoadMore?: boolean; isTransition?: boolean } = {}
-    ) => {
-      const { isLoadMore, isTransition } = options;
+    async (url: string, options: { isLoadMore?: boolean } = {}) => {
+      const { isLoadMore } = options;
 
-      if (!isLoadMore && !isTransition) {
-        setLoading(true);
-      }
       if (!isLoadMore) {
+        setLoading(true);
         setError('');
         setNotFound(false);
+      } else {
+        setIsFetchingNextPage(true);
       }
 
       try {
         const response = await axios.get(url);
         const { info, results } = response.data;
-
         const transformedCharacters = results.map(
           (character: { status: string }) => ({
             ...character,
             status: character.status.toLowerCase()
           })
         );
-
         setCharacters((prev) =>
           isLoadMore
             ? [...prev, ...transformedCharacters]
@@ -93,9 +70,7 @@ export const useCharacters = () => {
           toast.error(errorMessage);
         }
       } finally {
-        if (!isLoadMore && !isTransition) {
-          setLoading(false);
-        }
+        setLoading(false);
         if (isLoadMore) {
           setIsFetchingNextPage(false);
         }
@@ -110,39 +85,39 @@ export const useCharacters = () => {
     }
   }, [nextPage, isFetchingNextPage, fetchCharacters]);
 
-  useEffect(() => {
-    const params: { [key: string]: string } = {};
-    if (filters.name) params.name = filters.name;
-    if (filters.status) params.status = filters.status;
-    if (filters.gender) params.gender = filters.gender;
-    if (filters.species) params.species = filters.species;
-
-    const searchParams = new URLSearchParams(params);
-    const newUrl = `${API_URL}?${searchParams.toString()}`;
-
-    fetchCharacters(newUrl, { isTransition: true });
-
-    setSearchParams(params, { replace: true });
-  }, [filters.name]);
+  const [debouncedName, setDebouncedName] = useState(filters.name);
 
   useDebouncedEffect(
     () => {
-      const params: { [key: string]: string } = {};
-      if (filters.name) params.name = filters.name;
-      if (filters.status) params.status = filters.status;
-      if (filters.species) params.species = filters.species;
-      if (filters.gender) params.gender = filters.gender;
-
-      const searchParams = new URLSearchParams(params);
-      const newUrl = `${API_URL}?${searchParams.toString()}`;
-
-      fetchCharacters(newUrl);
-
-      setSearchParams(params, { replace: true });
+      setDebouncedName(filters.name);
     },
-    [filters.status, filters.species, filters.gender],
+    [filters.name],
     DEBOUNCE_DELAY
   );
+
+  useEffect(() => {
+    const params: Record<string, string> = {};
+    if (debouncedName) params.name = debouncedName;
+    if (filters.status) params.status = filters.status;
+    if (filters.species) params.species = filters.species;
+    if (filters.gender) params.gender = filters.gender;
+
+    const newSearchParams = new URLSearchParams(params);
+    const newUrl = `${API_URL}?${newSearchParams.toString()}`;
+
+    startTransition(() => {
+      fetchCharacters(newUrl);
+    });
+
+    setSearchParams(newSearchParams, { replace: true });
+  }, [
+    debouncedName,
+    filters.status,
+    filters.species,
+    filters.gender,
+    fetchCharacters,
+    setSearchParams
+  ]);
 
   const updateCharacter = useCallback((updatedCharacter: ICharacter) => {
     setCharacters((prevCharacters) =>
@@ -154,13 +129,9 @@ export const useCharacters = () => {
 
   return {
     characters,
-    loading: loading && !isPending,
-    isPending,
+    loading: loading || isPending,
     isFetchingNextPage,
     error,
-    filters,
-    onNameChange,
-    onFilterChange,
     notFound,
     fetchNextPage,
     hasNextPage,

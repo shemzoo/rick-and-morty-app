@@ -38,10 +38,6 @@ export const CharactersList = () => {
   const {
     characters,
     loading,
-    isPending,
-    filters,
-    onFilterChange,
-    onNameChange,
     notFound,
     fetchNextPage,
     hasNextPage,
@@ -49,7 +45,7 @@ export const CharactersList = () => {
   } = useCharacters();
 
   const renderContent = () => {
-    if (loading) {
+    if (loading && characters.length === 0) {
       return (
         <Loader
           size='large'
@@ -108,12 +104,8 @@ export const CharactersList = () => {
           alt='Rick and Morty Logo'
         />
       </div>
-      <FilterPanel
-        filters={filters}
-        onFilterChange={onFilterChange}
-        onNameChange={onNameChange}
-      />
-      <div style={{ opacity: isPending ? 0.6 : 1 }}>{renderContent()}</div>
+      <FilterPanel />
+      <div style={{ opacity: loading ? 0.6 : 1 }}>{renderContent()}</div>
     </>
   );
 };
