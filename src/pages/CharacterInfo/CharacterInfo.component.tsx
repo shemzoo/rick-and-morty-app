@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { ArrowBackIcon } from '@/assets';
 import { useCharacter } from '@/hooks';
@@ -8,10 +8,9 @@ import { capitalize } from '@/shared/helpers';
 import styles from './CharacterInfo.module.scss';
 
 export const CharacterInfo = () => {
-  const { id } = useParams<{ id: string }>();
-  const { character, loading, error } = useCharacter(id);
+  const { character, isLoading, error } = useCharacter();
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Loader
         size='large'

@@ -2,7 +2,7 @@ import { Toaster } from 'react-hot-toast';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import logo from '@/assets/rick-and-morty-logo.png';
-import { useCharacters } from '@/hooks';
+import { useCharacters, useSyncFiltersWithUrl } from '@/hooks';
 import { Loader } from '@/shared/components';
 import { type Status } from '@/shared/types';
 import { CharacterCard, FilterPanel } from '@/widgets';
@@ -35,21 +35,13 @@ export const genderOptions = [
 ];
 
 export const CharactersList = () => {
-  const {
-    characters,
-    loading,
-    isPending,
-    filters,
-    onFilterChange,
-    onNameChange,
-    notFound,
-    fetchNextPage,
-    hasNextPage,
-    updateCharacter
-  } = useCharacters();
+  const { characters, isLoading, notFound, hasNextPage, fetchNextPage, updateCharacter, filters } =
+    useCharacters();
+
+  useSyncFiltersWithUrl(filters);
 
   const renderContent = () => {
-    if (loading) {
+    if (isLoading && characters.length === 0) {
       return (
         <Loader
           size='large'
@@ -108,12 +100,9 @@ export const CharactersList = () => {
           alt='Rick and Morty Logo'
         />
       </div>
-      <FilterPanel
-        filters={filters}
-        onFilterChange={onFilterChange}
-        onNameChange={onNameChange}
-      />
-      <div style={{ opacity: isPending ? 0.6 : 1 }}>{renderContent()}</div>
+      <FilterPanel />
+      {renderContent()}
     </>
   );
 };
+

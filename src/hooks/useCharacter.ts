@@ -1,44 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import axios from 'axios';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { fetchCharacterById } from '@/stores/characters/characters.slice';
+import { type RootState } from '@/stores/store';
 
-import { type ICharacter } from '@/shared/types';
+export const useCharacter = () => {
+  const { id } = useParams<{ id: string }>();
+  const dispatch = useAppDispatch();
 
-export const useCharacter = (id?: string) => {
-  const [character, setCharacter] = useState<ICharacter | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const { selectedCharacter: character, loading, error } = useSelector(
+    (state: RootState) => state.characters
+  );
 
   useEffect(() => {
-    if (!id) return;
+    if (id) {
+      dispatch(fetchCharacterById(id));
+    }
+  }, [id, dispatch]);
 
-    const controller = new AbortController();
+  const isLoading = loading === 'pending';
 
-    const fetchCharacter = async () => {
-      setLoading(true);
-      setError('');
-      try {
-        const response = await axios.get<ICharacter>(
-          `https://rickandmortyapi.com/api/character/${id}`,
-          { signal: controller.signal }
-        );
-        setCharacter(response.data);
-      } catch (err) {
-        if (!axios.isCancel(err)) {
-          setError('Failed to fetch character data.');
-          console.error(err);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCharacter();
-
-    return () => {
-      controller.abort();
-    };
-  }, [id]);
-
-  return { character, loading, error };
+  return { character, isLoading, error };
 };
