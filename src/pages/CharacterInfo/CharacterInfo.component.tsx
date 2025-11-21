@@ -1,17 +1,33 @@
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import { ArrowBackIcon } from '@/assets';
-import { useCharacter } from '@/hooks';
+import { useAppDispatch } from '@/hooks';
 import { Loader } from '@/shared/components';
 import { capitalize } from '@/shared/helpers';
+import { fetchCharacterById } from '@/stores/characters/characters.slice';
+import { type RootState } from '@/stores/store';
 
 import styles from './CharacterInfo.module.scss';
 
 export const CharacterInfo = () => {
   const { id } = useParams<{ id: string }>();
-  const { character, loading, error } = useCharacter(id);
+  const dispatch = useAppDispatch();
 
-  if (loading) {
+  const { selectedCharacter: character, loading, error } = useSelector(
+    (state: RootState) => state.characters
+  );
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchCharacterById(id));
+    }
+  }, [id, dispatch]);
+
+  const isLoading = loading === 'pending';
+
+  if (isLoading) {
     return (
       <Loader
         size='large'

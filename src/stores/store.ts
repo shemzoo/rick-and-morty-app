@@ -1,21 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import filtersReducer from './filters/filters.slice';
+import charactersReducer, { initialState } from './characters/characters.slice';
 
 const searchParams = new URLSearchParams(window.location.search);
 
 const preloadedState = {
-  filters: {
-    name: searchParams.get('name') || '',
-    status: searchParams.get('status') || '',
-    species: searchParams.get('species') || '',
-    gender: searchParams.get('gender') || ''
+  characters: {
+    ...initialState,
+    filters: initialState.filters
   }
 };
 
 export const store = configureStore({
   reducer: {
-    filters: filtersReducer
+    characters: charactersReducer
   },
   preloadedState
 });

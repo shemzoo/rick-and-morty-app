@@ -1,16 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { SearchIcon } from '@/assets';
+import { useAppDispatch } from '@/hooks';
 import { genderOptions, speciesOptions, statusOptions } from '@/pages';
 import { Selector, TextInput } from '@/shared/components';
-import { setGender, setName, setSpecies, setStatus } from '@/stores/filters';
-import { type AppDispatch, type RootState } from '@/stores/store';
+import { setGender, setName, setSpecies, setStatus } from '@/stores/characters/characters.slice';
+import { type RootState } from '@/stores/store';
 
 import styles from './FilterPanel.module.scss';
 
 export const FilterPanel = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const filters = useSelector((state: RootState) => state.filters);
+  const dispatch = useAppDispatch();
+  const filters = useSelector((state: RootState) => state.characters.filters);
 
   return (
     <div className={styles['filter-panel']}>
