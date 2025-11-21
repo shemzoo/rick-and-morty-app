@@ -1,24 +1,13 @@
-import { useCallback, useEffect } from 'react';
-
 import { Toaster } from 'react-hot-toast';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 
 import logo from '@/assets/rick-and-morty-logo.png';
-import { useAppDispatch, useDebouncedEffect } from '@/hooks';
+import { useCharacters, useSyncFiltersWithUrl } from '@/hooks';
 import { Loader } from '@/shared/components';
-import { type ICharacter, type Status } from '@/shared/types';
-import {
-  fetchCharacters,
-  updateCharacter as updateCharacterAction
-} from '@/stores/characters/characters.slice';
-import { type RootState } from '@/stores/store';
+import { type Status } from '@/shared/types';
 import { CharacterCard, FilterPanel } from '@/widgets';
 
 import styles from './CharactersList.module.scss';
-
-const DEBOUNCE_DELAY = 500;
 
 export const statusOptions: { value: Status; label: string }[] = [
   { value: 'alive', label: 'Alive' },
@@ -46,47 +35,10 @@ export const genderOptions = [
 ];
 
 export const CharactersList = () => {
-  const dispatch = useAppDispatch();
-  const { characters, loading, notFound, nextPage, filters } = useSelector(
-    (state: RootState) => state.characters
-  );
+  const { characters, isLoading, notFound, hasNextPage, fetchNextPage, updateCharacter, filters } =
+    useCharacters();
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const hasNextPage = !!nextPage;
-  const isLoading = loading === 'pending';
-
-  const fetchNextPage = useCallback(() => {
-    if (nextPage && !isLoading) {
-      dispatch(fetchCharacters({ url: nextPage, isLoadMore: true }));
-    }
-  }, [nextPage, isLoading, dispatch]);
-
-  const updateCharacter = useCallback(
-    (updatedCharacter: ICharacter) => {
-      dispatch(updateCharacterAction(updatedCharacter));
-    },
-    [dispatch]
-  );
-
-  useDebouncedEffect(
-    () => {
-      dispatch(fetchCharacters(filters));
-    },
-    [filters, dispatch],
-    DEBOUNCE_DELAY
-  );
-
-  useEffect(() => {
-    const params: Record<string, string> = {};
-    if (filters.name) params.name = filters.name;
-    if (filters.status) params.status = filters.status;
-    if (filters.species) params.species = filters.species;
-    if (filters.gender) params.gender = filters.gender;
-
-    const newSearchParams = new URLSearchParams(params);
-    setSearchParams(newSearchParams, { replace: true });
-  }, [filters, setSearchParams]);
+  useSyncFiltersWithUrl(filters);
 
   const renderContent = () => {
     if (isLoading && characters.length === 0) {
@@ -153,3 +105,4 @@ export const CharactersList = () => {
     </>
   );
 };
+
