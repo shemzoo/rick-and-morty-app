@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { type IFilters } from '@/shared/types/filters';
+import { type IFilters } from '@/shared/types';
 
 export const useSyncFiltersWithUrl = (filters: IFilters) => {
   const [searchParams, setSearchParams] = useSearchParams();

@@ -83,7 +83,7 @@ export const fetchCharacters = createAsyncThunk(
       if (err instanceof AxiosError && err.response?.status === 404) {
         return rejectWithValue('notFound');
       }
-      const errorMessage = 'Не удалось загрузить список персонажей';
+      const errorMessage = 'Не удалось загрузить список персонажей!';
       toast.error(errorMessage);
       return rejectWithValue(errorMessage);
     }
@@ -98,7 +98,7 @@ export const fetchCharacterById = createAsyncThunk(
       return response.data;
     } catch (err) {
       if (!axios.isCancel(err)) {
-        const errorMessage = 'Failed to fetch character data.';
+        const errorMessage = 'Не удалось загрузить данные о персонаже!';
         toast.error(errorMessage);
         return rejectWithValue(errorMessage);
       }
@@ -111,17 +111,11 @@ const charactersSlice = createSlice({
   name: 'characters',
   initialState,
   reducers: {
-    setName: (state, action: PayloadAction<string>) => {
-      state.filters.name = action.payload;
-    },
-    setStatus: (state, action: PayloadAction<string>) => {
-      state.filters.status = action.payload;
-    },
-    setSpecies: (state, action: PayloadAction<string>) => {
-      state.filters.species = action.payload;
-    },
-    setGender: (state, action: PayloadAction<string>) => {
-      state.filters.gender = action.payload;
+    setFilter: (
+      state,
+      action: PayloadAction<{ field: keyof IFilters; value: string }>
+    ) => {
+      state.filters[action.payload.field] = action.payload.value;
     },
     resetFilters: (state) => {
       state.filters = initialFiltersState;
@@ -141,24 +135,37 @@ const charactersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCharacters.pending, (state, action) => {
-        state.error = null;
-        if (!action.meta.arg.isLoadMore) {
-          state.loading = 'pending';
-          state.notFound = false;
-          state.characters = [];
+      .addCase(
+        fetchCharacters.pending,
+        (state, action: ReturnType<typeof fetchCharacters.pending>) => {
+          state.error = null;
+          if (!action.meta.arg.isLoadMore) {
+            state.loading = 'pending';
+            state.notFound = false;
+            state.characters = [];
+          }
         }
-      })
-      .addCase(fetchCharacters.fulfilled, (state, action) => {
-        state.loading = 'succeeded';
-        if (action.payload.isLoadMore) {
-          state.characters.push(...action.payload.characters);
-        } else {
-          state.characters = action.payload.characters;
+      )
+      .addCase(
+        fetchCharacters.fulfilled,
+        (
+          state,
+          action: PayloadAction<{
+            characters: ICharacter[];
+            nextPage: string | null;
+            isLoadMore?: boolean;
+          }>
+        ) => {
+          state.loading = 'succeeded';
+          if (action.payload.isLoadMore) {
+            state.characters.push(...action.payload.characters);
+          } else {
+            state.characters = action.payload.characters;
+          }
+          state.nextPage = action.payload.nextPage;
         }
-        state.nextPage = action.payload.nextPage;
-      })
-      .addCase(fetchCharacters.rejected, (state, action) => {
+      )
+      .addCase(fetchCharacters.rejected, (state, action: PayloadAction<unknown>) => {
         state.loading = 'failed';
         state.nextPage = null;
         if (action.payload === 'notFound') {
@@ -174,25 +181,25 @@ const charactersSlice = createSlice({
         state.loading = 'pending';
         state.error = null;
       })
-      .addCase(fetchCharacterById.fulfilled, (state, action) => {
-        state.loading = 'succeeded';
-        state.selectedCharacter = action.payload;
-      })
-      .addCase(fetchCharacterById.rejected, (state, action) => {
-        state.loading = 'failed';
-        state.error = action.payload as string;
-        state.selectedCharacter = null;
-      });
+      .addCase(
+        fetchCharacterById.fulfilled,
+        (state, action: PayloadAction<ICharacter>) => {
+          state.loading = 'succeeded';
+          state.selectedCharacter = action.payload;
+        }
+      )
+      .addCase(
+        fetchCharacterById.rejected,
+        (state, action: PayloadAction<unknown>) => {
+          state.loading = 'failed';
+          state.error = action.payload as string;
+          state.selectedCharacter = null;
+        }
+      );
   }
 });
 
-export const {
-  setName,
-  setStatus,
-  setSpecies,
-  setGender,
-  resetFilters,
-  updateCharacter
-} = charactersSlice.actions;
+export const { setFilter, resetFilters, updateCharacter } =
+  charactersSlice.actions;
 
 export default charactersSlice.reducer;
