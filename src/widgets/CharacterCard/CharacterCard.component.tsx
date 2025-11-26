@@ -115,7 +115,7 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
               <div
                 className={classNames(
                   styles.card__value,
-                  styles.card__value_edit_input_status
+                  styles.card__value_interactive
                 )}
               >
                 <Selector

@@ -4,7 +4,7 @@ import { SearchIcon } from '@/assets';
 import { useAppDispatch } from '@/hooks';
 import { genderOptions, speciesOptions, statusOptions } from '@/pages';
 import { Selector, TextInput } from '@/shared/components';
-import { setFilter } from '@/stores/characters';
+import { setFilters } from '@/stores/characters';
 import { type RootState } from '@/stores/store';
 
 import styles from './FilterPanel.module.scss';
@@ -21,7 +21,7 @@ export const FilterPanel = () => {
           placeholder='Search by name'
           icon={<SearchIcon />}
           value={filters.name}
-          onChange={(value) => dispatch(setFilter({ field: 'name', value }))}
+          onChange={(value) => dispatch(setFilters({ field: 'name', value }))}
         />
       </div>
       <div className={styles['filter-panel__item']}>
@@ -30,7 +30,7 @@ export const FilterPanel = () => {
           placeholder='Species'
           options={speciesOptions}
           value={filters.species}
-          onChange={(value) => dispatch(setFilter({ field: 'species', value }))}
+          onChange={(value) => dispatch(setFilters({ field: 'species', value }))}
         />
       </div>
       <div className={styles['filter-panel__item']}>
@@ -39,7 +39,7 @@ export const FilterPanel = () => {
           placeholder='Gender'
           options={genderOptions}
           value={filters.gender}
-          onChange={(value) => dispatch(setFilter({ field: 'gender', value }))}
+          onChange={(value) => dispatch(setFilters({ field: 'gender', value }))}
         />
       </div>
       <div className={styles['filter-panel__item']}>
@@ -48,7 +48,7 @@ export const FilterPanel = () => {
           placeholder='Status'
           options={statusOptions}
           value={filters.status}
-          onChange={(value) => dispatch(setFilter({ field: 'status', value }))}
+          onChange={(value) => dispatch(setFilters({ field: 'status', value }))}
         />
       </div>
     </div>

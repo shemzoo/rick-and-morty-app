@@ -1,56 +1,92 @@
-import { useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
+import { useAppDispatch, useDebouncedEffect } from '@/hooks';
 import { type ICharacter } from '@/shared/types';
-import {
-  fetchCharacters,
-  updateCharacter as updateCharacterAction
-} from '@/stores/characters/characters.slice';
+import { useGetCharactersQuery } from '@/stores/api';
+import { updateSelectedCharacter } from '@/stores/characters';
 import { type RootState } from '@/stores/store';
-
-import { useAppDispatch } from './useAppDispatch';
-import { useDebouncedEffect } from './useDebouncedEffect';
-
-const DEBOUNCE_DELAY = 500;
 
 export const useCharacters = () => {
   const dispatch = useAppDispatch();
-  const { characters, loading, notFound, nextPage, filters } = useSelector(
-    (state: RootState) => state.characters
-  );
+  const filters = useSelector((state: RootState) => state.characters.filters);
 
-  const hasNextPage = !!nextPage;
-  const isLoading = loading === 'pending';
+  const [page, setPage] = useState(1);
+  const [allCharacters, setAllCharacters] = useState<ICharacter[]>([]);
+  const [hasNextPage, setHasNextPage] = useState(true);
 
-  const fetchNextPage = useCallback(() => {
-    if (nextPage && !isLoading) {
-      dispatch(fetchCharacters({ url: nextPage, isLoadMore: true }));
-    }
-  }, [nextPage, isLoading, dispatch]);
-
-  const updateCharacter = useCallback(
-    (updatedCharacter: ICharacter) => {
-      dispatch(updateCharacterAction(updatedCharacter));
-    },
-    [dispatch]
-  );
+  const [debouncedFilters, setDebouncedFilters] = useState(filters);
+  const isInitialMount = useRef(true);
+  const filtersString = JSON.stringify(filters);
 
   useDebouncedEffect(
     () => {
-      dispatch(fetchCharacters(filters));
+      if (isInitialMount.current) {
+        isInitialMount.current = false;
+        return;
+      }
+
+      setDebouncedFilters(filters);
+      setPage(1);
+      setAllCharacters([]);
     },
-    [filters, dispatch],
-    DEBOUNCE_DELAY
+    [filtersString],
+    500
   );
 
+  const {
+    data,
+    isLoading: isQueryLoading,
+    isFetching,
+    isError,
+    error,
+  } = useGetCharactersQuery({
+    ...debouncedFilters,
+    page,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setAllCharacters((prev) =>
+        page === 1 ? data.results : [...prev, ...data.results]
+      );
+      setHasNextPage(data.info.next !== null);
+    }
+  }, [data, page]);
+
+  const fetchNextPage = () => {
+    if (hasNextPage) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handleUpdateCharacter = (character: ICharacter) => {
+    setAllCharacters((prev) =>
+      prev.map((c) => (c.id === character.id ? character : c))
+    );
+    dispatch(updateSelectedCharacter(character));
+  };
+
+  const isLoading = isQueryLoading && allCharacters.length === 0;
+
+  const isNotFound =
+    isError &&
+    typeof error === 'object' &&
+    error !== null &&
+    'status' in error &&
+    (error as { status: number }).status === 404;
+
+  const isGenericError = isError && !isNotFound;
+
   return {
-    characters,
+    characters: allCharacters,
     isLoading,
-    notFound,
+    isFetching,
+    isNotFound,
+    isGenericError,
     hasNextPage,
     fetchNextPage,
-    updateCharacter,
-    filters
+    updateCharacter: handleUpdateCharacter,
   };
 };
