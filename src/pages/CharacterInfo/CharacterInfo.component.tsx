@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { ArrowBackIcon } from '@/assets';
 import { Loader } from '@/shared/components';
-import { capitalize } from '@/shared/helpers';
+import { capitalize, isErrorWithStatus } from '@/shared/helpers';
 import { useGetCharacterByIdQuery } from '@/stores/api';
 
 import styles from './CharacterInfo.module.scss';
@@ -12,7 +12,8 @@ export const CharacterInfo = () => {
   const {
     data: character,
     isLoading,
-    isError
+    isError,
+    error
   } = useGetCharacterByIdQuery(Number(id), {
     skip: !id
   });
@@ -26,10 +27,21 @@ export const CharacterInfo = () => {
     );
   }
 
-  if (isError || !character) {
+  const isNotFound = isErrorWithStatus(error, 404);
+  const isGenericError = isError && !isNotFound;
+
+  if (isNotFound) {
     return (
       <div className={styles.error}>
-        Character not found or an error occurred.
+        Character with ID {id} does not exist.
+      </div>
+    );
+  }
+
+  if (isGenericError || !character) {
+    return (
+      <div className={styles.error}>
+        An unexpected error occurred. Please try again later.
       </div>
     );
   }

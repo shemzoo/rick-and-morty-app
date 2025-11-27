@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch, useDebouncedEffect } from '@/hooks';
+import { isErrorWithStatus } from '@/shared/helpers';
 import { type ICharacter } from '@/shared/types';
 import { useGetCharactersQuery } from '@/stores/api';
 import { updateSelectedCharacter } from '@/stores/characters';
@@ -40,10 +41,10 @@ export const useCharacters = () => {
     isLoading: isQueryLoading,
     isFetching,
     isError,
-    error,
+    error
   } = useGetCharactersQuery({
     ...debouncedFilters,
-    page,
+    page
   });
 
   useEffect(() => {
@@ -63,19 +64,14 @@ export const useCharacters = () => {
 
   const handleUpdateCharacter = (character: ICharacter) => {
     setAllCharacters((prev) =>
-      prev.map((c) => (c.id === character.id ? character : c))
+      prev.map((char) => (char.id === character.id ? character : char))
     );
     dispatch(updateSelectedCharacter(character));
   };
 
   const isLoading = isQueryLoading && allCharacters.length === 0;
 
-  const isNotFound =
-    isError &&
-    typeof error === 'object' &&
-    error !== null &&
-    'status' in error &&
-    (error as { status: number }).status === 404;
+  const isNotFound = isErrorWithStatus(error, 404);
 
   const isGenericError = isError && !isNotFound;
 
@@ -87,6 +83,6 @@ export const useCharacters = () => {
     isGenericError,
     hasNextPage,
     fetchNextPage,
-    updateCharacter: handleUpdateCharacter,
+    updateCharacter: handleUpdateCharacter
   };
 };
