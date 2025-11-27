@@ -1,10 +1,12 @@
 import { Toaster } from 'react-hot-toast';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSelector } from 'react-redux';
 
 import logo from '@/assets/rick-and-morty-logo.png';
 import { useCharacters, useSyncFiltersWithUrl } from '@/hooks';
 import { Loader } from '@/shared/components';
 import { type Status } from '@/shared/types';
+import { type RootState } from '@/stores/store';
 import { CharacterCard, FilterPanel } from '@/widgets';
 
 import styles from './CharactersList.module.scss';
@@ -35,13 +37,21 @@ export const genderOptions = [
 ];
 
 export const CharactersList = () => {
-  const { characters, isLoading, notFound, hasNextPage, fetchNextPage, updateCharacter, filters } =
-    useCharacters();
+  const {
+    characters,
+    isLoading,
+    isFetching,
+    isNotFound,
+    hasNextPage,
+    fetchNextPage,
+    updateCharacter
+  } = useCharacters();
 
+  const filters = useSelector((state: RootState) => state.characters.filters);
   useSyncFiltersWithUrl(filters);
 
   const renderContent = () => {
-    if (isLoading && characters.length === 0) {
+    if (isLoading) {
       return (
         <Loader
           size='large'
@@ -50,7 +60,7 @@ export const CharactersList = () => {
       );
     }
 
-    if (notFound) {
+    if (isNotFound) {
       return (
         <div className={styles.list__message}>
           <p>Персонажи с такими параметрами не найдены</p>
@@ -64,15 +74,19 @@ export const CharactersList = () => {
         next={fetchNextPage}
         hasMore={hasNextPage}
         loader={
-          <div className={styles.list__loader}>
-            <Loader size='small' />
-          </div>
+          isFetching && (
+            <div className={styles.list__loader}>
+              <Loader size='small' />
+            </div>
+          )
         }
         style={{ overflow: 'visible' }}
         endMessage={
-          <p className={styles['list__end-message']}>
-            <b>Конец списка персонажей</b>
-          </p>
+          !hasNextPage && characters.length > 0 ? (
+            <p className={styles['list__end-message']}>
+              <b>Конец списка персонажей</b>
+            </p>
+          ) : null
         }
         className={styles.list__items}
       >
@@ -105,4 +119,3 @@ export const CharactersList = () => {
     </>
   );
 };
-

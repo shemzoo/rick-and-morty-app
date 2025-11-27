@@ -1,14 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { ArrowBackIcon } from '@/assets';
-import { useCharacter } from '@/hooks';
 import { Loader } from '@/shared/components';
-import { capitalize } from '@/shared/helpers';
+import { capitalize, isErrorWithStatus } from '@/shared/helpers';
+import { useGetCharacterByIdQuery } from '@/stores/api';
 
 import styles from './CharacterInfo.module.scss';
 
 export const CharacterInfo = () => {
-  const { character, isLoading, error } = useCharacter();
+  const { id } = useParams<{ id: string }>();
+  const {
+    data: character,
+    isLoading,
+    isError,
+    error
+  } = useGetCharacterByIdQuery(Number(id), {
+    skip: !id
+  });
 
   if (isLoading) {
     return (
@@ -19,12 +27,23 @@ export const CharacterInfo = () => {
     );
   }
 
-  if (error) {
-    return <div className={styles.error}>{error}</div>;
+  const isNotFound = isErrorWithStatus(error, 404);
+  const isGenericError = isError && !isNotFound;
+
+  if (isNotFound) {
+    return (
+      <div className={styles.error}>
+        Character with ID {id} does not exist.
+      </div>
+    );
   }
 
-  if (!character) {
-    return null;
+  if (isGenericError || !character) {
+    return (
+      <div className={styles.error}>
+        An unexpected error occurred. Please try again later.
+      </div>
+    );
   }
 
   const infoItems = [

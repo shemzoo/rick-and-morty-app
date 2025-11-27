@@ -1,21 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import charactersReducer, { initialState } from './characters/characters.slice';
-
-const searchParams = new URLSearchParams(window.location.search);
-
-const preloadedState = {
-  characters: {
-    ...initialState,
-    filters: initialState.filters
-  }
-};
+import { rickAndMortyApi } from './api/rickAndMortyApi';
+import charactersReducer from './characters/characters.slice';
+import { rtkQueryErrorLogger } from './middleware/rtkQueryErrorLogger';
 
 export const store = configureStore({
   reducer: {
-    characters: charactersReducer
+    characters: charactersReducer,
+    [rickAndMortyApi.reducerPath]: rickAndMortyApi.reducer,
   },
-  preloadedState
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(
+      rickAndMortyApi.middleware,
+      rtkQueryErrorLogger
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
