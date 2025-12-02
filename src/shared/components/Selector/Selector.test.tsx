@@ -18,6 +18,7 @@ describe('Selector', () => {
 
   test('renders with placeholder text when no value is selected', () => {
     render(<Selector {...defaultProps} />);
+
     expect(screen.getByText('Select an option')).toBeInTheDocument();
   });
 
@@ -28,9 +29,11 @@ describe('Selector', () => {
         size='large'
       />
     );
+
     const selectorElement = screen
       .getByText('Select an option')
       .closest(`.${styles.selector}`);
+
     expect(selectorElement).toHaveClass(styles.selector_large);
   });
 
@@ -41,17 +44,21 @@ describe('Selector', () => {
         size='small'
       />
     );
+
     const selectorElement = screen
       .getByText('Select an option')
       .closest(`.${styles.selector}`);
+
     expect(selectorElement).toHaveClass(styles.selector_small);
   });
 
   test('renders with "large" size class by default', () => {
     render(<Selector {...defaultProps} />);
+
     const selectorElement = screen
       .getByText('Select an option')
       .closest(`.${styles.selector}`);
+
     expect(selectorElement).toHaveClass(styles.selector_large);
   });
 });

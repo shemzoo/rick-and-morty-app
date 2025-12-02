@@ -5,13 +5,12 @@ import { useSelector } from 'react-redux';
 import logo from '@/assets/rick-and-morty-logo.png';
 import { useCharacters, useSyncFiltersWithUrl } from '@/hooks';
 import { Loader } from '@/shared/components';
-import { type Status } from '@/shared/types';
 import { type RootState } from '@/stores/store';
 import { CharacterCard, FilterPanel } from '@/widgets';
 
 import styles from './CharactersList.module.scss';
 
-export const statusOptions: { value: Status; label: string }[] = [
+export const statusOptions: { value: string; label: string }[] = [
   { value: 'alive', label: 'Alive' },
   { value: 'dead', label: 'Dead' },
   { value: 'unknown', label: 'Unknown' }
