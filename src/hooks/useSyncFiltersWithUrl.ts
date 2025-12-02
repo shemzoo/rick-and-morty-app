@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { type IFilters } from '@/shared/types';
 
 export const useSyncFiltersWithUrl = (filters: IFilters) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [_searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const params: Record<string, string> = {};

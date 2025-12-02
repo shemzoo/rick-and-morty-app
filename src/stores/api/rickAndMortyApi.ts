@@ -16,23 +16,12 @@ export const rickAndMortyApi = createApi({
     getCharacters: builder.query<ICharactersResponse, IGetCharactersQueryArgs>({
       query: (filters) => ({
         url: 'character',
-        params: filters,
-      }),
-      transformResponse: (response: ICharactersResponse) => ({
-        ...response,
-        results: response.results.map((character) => ({
-          ...character,
-          status: character.status.toLowerCase(),
-        })),
-      }),
+        params: filters
+      })
     }),
     getCharacterById: builder.query<ICharacter, number>({
-      query: (id) => `character/${id}`,
-      transformResponse: (character: ICharacter) => ({
-        ...character,
-        status: character.status.toLowerCase(),
-      }),
-    }),
+      query: (id) => `character/${id}`
+    })
   })
 });
 

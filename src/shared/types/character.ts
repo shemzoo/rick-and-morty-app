@@ -1,9 +1,7 @@
-import { type Status } from '@/shared/types';
-
 export interface ICharacter {
   id: number;
   name: string;
-  status: Status;
+  status: string;
   species: string;
   type: string;
   gender: string;
