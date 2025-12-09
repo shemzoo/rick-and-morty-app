@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { useAppDispatch, useDebouncedEffect } from '@/hooks';
+import { useAppDispatch, useDebounce } from '@/hooks';
 import { isErrorWithStatus } from '@/shared/helpers';
 import { type ICharacter } from '@/shared/types';
 import { useGetCharactersQuery } from '@/stores/api';
@@ -17,24 +17,7 @@ export const useCharacters = () => {
   const [allCharacters, setAllCharacters] = useState<ICharacter[]>([]);
   const [hasNextPage, setHasNextPage] = useState(true);
 
-  const [debouncedFilters, setDebouncedFilters] = useState(filters);
-  const isInitialMount = useRef(true);
-  const filtersString = JSON.stringify(filters);
-
-  useDebouncedEffect(
-    () => {
-      if (isInitialMount.current) {
-        isInitialMount.current = false;
-        return;
-      }
-
-      setDebouncedFilters(filters);
-      setPage(1);
-      setAllCharacters([]);
-    },
-    [filtersString],
-    500
-  );
+  const debouncedFilters = useDebounce(filters, 500);
 
   const {
     data,
@@ -48,16 +31,21 @@ export const useCharacters = () => {
   });
 
   useEffect(() => {
+    setPage(1);
+    setAllCharacters([]);
+  }, [debouncedFilters]);
+
+  useEffect(() => {
     if (data) {
       setAllCharacters((prev) =>
         page === 1 ? data.results : [...prev, ...data.results]
       );
       setHasNextPage(data.info.next !== null);
     }
-  }, [data, page]);
+  }, [data]);
 
   const fetchNextPage = () => {
-    if (hasNextPage) {
+    if (hasNextPage && !isFetching) {
       setPage((prevPage) => prevPage + 1);
     }
   };

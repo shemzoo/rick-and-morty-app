@@ -22,6 +22,7 @@ export const FilterPanel = () => {
           icon={<SearchIcon />}
           value={filters.name}
           onChange={(value) => dispatch(setFilters({ field: 'name', value }))}
+          data-testid='search-input'
         />
       </div>
       <div className={styles['filter-panel__item']}>
