@@ -50,7 +50,10 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
 
     if (mode === 'edit') {
       return (
-        <div className={classNames(styles.card, styles.card_edit)}>
+        <div
+          className={classNames(styles.card, styles.card_edit)}
+          data-testid='character-card'
+        >
           <div className={styles.card__icons}>
             <CheckmarkIcon
               className={classNames(styles.card__icon, styles.card__icon_save)}
@@ -140,7 +143,10 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
     }
 
     return (
-      <div className={styles.card}>
+      <div
+        className={styles.card}
+        data-testid='character-card'
+      >
         <div className={styles.card__icons}>
           <EditIcon
             className={styles.card__icon}
