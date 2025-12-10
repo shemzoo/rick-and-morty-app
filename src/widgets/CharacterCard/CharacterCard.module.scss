@@ -1,12 +1,13 @@
-@use '@/styles/variables' as *;
+@use '@/styles/_variables' as *;
 
 .card {
   height: 100%;
   font-family: Roboto, sans-serif;
   display: flex;
-  background-color: $color-background;
+  background-color: var(--card-background-color);
+  border: 1px solid var(--card-border-color);
   border-radius: 6px;
-  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 4px 0px var(--card-shadow-color);
   padding: 7px;
   position: relative;
 
@@ -15,6 +16,7 @@
     top: 10px;
     right: 10px;
     display: flex;
+    align-items: center;
     gap: 8px;
   }
 
@@ -22,6 +24,7 @@
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     cursor: pointer;
+    color: var(--icon-color-secondary);
   }
 
   &:hover &__icon {
@@ -56,7 +59,7 @@
     font-weight: bold;
     font-size: 20px;
     line-height: 1.5;
-    color: rgba(0, 0, 0, 0.87);
+    color: var(--text-color);
     text-decoration: none;
     max-width: 170px;
 
@@ -83,7 +86,7 @@
     font-family: Roboto, sans-serif;
     font-weight: bold;
     font-size: 16px;
-    color: #3f3f3f;
+    color: var(--text-color-secondary);
     margin-bottom: 7px;
   }
 
@@ -91,7 +94,7 @@
     font-family: Roboto, sans-serif;
     font-weight: 500;
     font-size: 14px;
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--text-color-tertiary);
     max-width: 170px;
     white-space: nowrap;
     overflow: hidden;

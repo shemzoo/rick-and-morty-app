@@ -1,4 +1,4 @@
-@use '@/styles/variables' as *;
+@use '@/styles/_variables' as *;
 
 .text-input {
   display: inline-flex;
@@ -14,7 +14,7 @@
     font-size: inherit;
     font-weight: inherit;
     line-height: inherit;
-    color: rgba(0, 0, 0, 0.87);
+    color: var(--text-color);
   }
 
   &__icon {
@@ -26,15 +26,15 @@
   // Variants
   &_underlined {
     background-color: transparent;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid var(--text-color);
   }
 
   &_bordered {
     width: 240px;
     height: 56px;
     padding: 0 16px;
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-color: var(--input-background-color);
+    border: 1px solid var(--input-border-color);
     gap: 8px;
     border-radius: 8px;
 
@@ -43,14 +43,14 @@
       font-weight: 400;
 
       &::placeholder {
-        color: rgba(0, 0, 0, 0.5);
+        color: var(--text-color-tertiary);
       }
     }
 
     .text-input__icon {
       width: 24px;
       height: 24px;
-      color: rgba(0, 0, 0, 0.54);
+      color: var(--icon-color-secondary);
     }
   }
 }

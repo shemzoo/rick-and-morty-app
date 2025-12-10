@@ -1,4 +1,4 @@
-@use '@/styles/variables' as *;
+@use '@/styles/_variables' as *;
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -139,5 +139,49 @@ table {
 
 body {
   font-family: 'Karla', sans-serif;
-  background-color: $color-background;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.light {
+  --background-color: #ffffff;
+  --text-color: #212121;
+  --card-background-color: #ffffff;
+  --card-border-color: #e0e0e0;
+  --input-background-color: #ffffff;
+  --input-border-color: #e0e0e0;
+  --logo-text-color: #212121;
+  --header-background-color: #ffffff;
+  --header-shadow-color: rgba(0, 0, 0, 0.1);
+  --switcher-border-color: #393939;
+  --switcher-background-color: #ffffff;
+  --card-shadow-color: rgba(0, 0, 0, 0.25);
+  --text-color-secondary: #3f3f3f;
+  --text-color-tertiary: rgba(0, 0, 0, 0.6);
+  --selector-hover-background-color: #f2f2f2;
+  --character-image-border-color: #f2f2f7;
+  --character-list-item-border-color: rgba(33, 33, 33, 0.08);
+  --icon-color-secondary: rgba(0, 0, 0, 0.54);
+}
+
+.dark {
+  --background-color: #333333;
+  --text-color: #ffffff;
+  --card-background-color: #151515;
+  --card-border-color: #3c3e44;
+  --input-background-color: #333333;
+  --input-border-color: #ffffff;
+  --logo-text-color: #ffffff;
+  --header-background-color: #151515;
+  --footer-background-color: #151515;
+  --header-shadow-color: rgba(0, 0, 0, 0.3);
+  --switcher-border-color: #ffffff;
+  --switcher-background-color: #3c3c3c;
+  --card-shadow-color: rgba(0, 0, 0, 0.5);
+  --text-color-secondary: rgba(255, 255, 255, 0.87);
+  --text-color-tertiary: rgba(255, 255, 255, 0.6);
+  --selector-hover-background-color: rgba(255, 255, 255, 0.1);
+  --character-image-border-color: #3c3e44;
+  --character-list-item-border-color: rgba(255, 255, 255, 0.1);
+  --icon-color-secondary: #cacaca;
 }
