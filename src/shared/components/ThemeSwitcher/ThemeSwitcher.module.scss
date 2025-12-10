@@ -1,6 +1,6 @@
 @use '@/styles/_variables' as *;
 
-.switcher {
+.theme-switcher {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,11 +12,11 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
-  &.dark {
+  &_dark {
     background-color: $color-black-bg;
     border-color: $white;
 
-    .icon {
+    .theme-switcher__icon {
       svg {
         path {
           fill: $white;
@@ -25,7 +25,7 @@
     }
   }
 
-  .icon {
+  &__icon {
     display: flex;
     align-items: center;
     justify-content: center;

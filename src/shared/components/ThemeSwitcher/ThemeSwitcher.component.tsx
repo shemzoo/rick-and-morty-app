@@ -19,10 +19,14 @@ export const ThemeSwitcher = () => {
 
   return (
     <button
-      className={classNames(styles.switcher, { [styles.dark]: isDark })}
+      className={classNames(styles['theme-switcher'], {
+        [styles['theme-switcher_dark']]: isDark,
+      })}
       onClick={onToggle}
     >
-      <span className={styles.icon}>{isDark ? <MoonIcon /> : <SunIcon />}</span>
+      <span className={styles['theme-switcher__icon']}>
+        {isDark ? <MoonIcon /> : <SunIcon />}
+      </span>
     </button>
   );
 };
