@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { Toaster } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 
@@ -20,7 +20,7 @@ export const CharactersList = () => {
     isNotFound,
     hasNextPage,
     fetchNextPage,
-    updateCharacter,
+    updateCharacter
   } = useCharacters();
 
   const filters = useSelector((state: RootState) => state.characters.filters);
