@@ -36,14 +36,32 @@ export const CharacterInfo = () => {
   }
 
   const infoItems = [
-    { label: t('charInfo.gender'), value: character.gender },
-    { label: t('charInfo.status'), value: character.status },
-    { label: t('charInfo.specie'), value: character.species },
+    {
+      label: t('charInfo.gender'),
+      value: t(`genderOptions.${character.gender.toLowerCase()}`, {
+        defaultValue: character.gender,
+      }),
+    },
+    {
+      label: t('charInfo.status'),
+      value: t(`statusOptions.${character.status.toLowerCase()}`, {
+        defaultValue: character.status,
+      }),
+    },
+    {
+      label: t('charInfo.specie'),
+      value: t(`speciesOptions.${character.species.toLowerCase()}`, {
+        defaultValue: character.species,
+      }),
+    },
     {
       label: t('charInfo.origin'),
       value: capitalize(character.origin.name),
     },
-    { label: t('charInfo.type'), value: character.type || t('statusOptions.unknown') },
+    {
+      label: t('charInfo.type'),
+      value: character.type || t('genderOptions.unknown'),
+    },
     { label: t('charInfo.location'), value: character.location.name },
   ];
 
