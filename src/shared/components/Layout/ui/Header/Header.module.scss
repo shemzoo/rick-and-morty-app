@@ -1,7 +1,7 @@
-@use '@/styles/variables' as *;
+@use '@/styles/_variables' as *;
 
 .header {
-  background-color: $color-background;
+  background-color: $color-header-background;
   box-shadow: -2px 0px 8px 2px $color-shadow;
   height: 60px;
   display: flex;
@@ -14,7 +14,6 @@
     padding: 0 210px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 }
-
-

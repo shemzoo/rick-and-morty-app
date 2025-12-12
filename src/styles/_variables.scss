@@ -1,4 +1,12 @@
 // Colors
-$color-background: #ffffff;
-$color-text-primary: #212121;
-$color-shadow: rgba(0, 0, 0, 0.1);
+$color-background: var(--background-color);
+$color-header-background: var(--header-background-color);
+$color-footer-background: var(--footer-background-color);
+$color-text-primary: var(--text-color);
+$color-shadow: var(--header-shadow-color);
+$color-black-border: var(--switcher-border-color);
+$color-black-bg: var(--switcher-background-color);
+
+// Static Colors
+$white: #ffffff;
+$black: #212121;
