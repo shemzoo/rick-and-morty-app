@@ -7,3 +7,4 @@ export * from './Selector/Selector.component';
 export * from './StatusIcon/StatusIcon.component';
 export * from './TextInput/TextInput.component';
 export * from './ThemeSwitcher/ThemeSwitcher.component';
+export * from './LangSwitcher/LangSwitcher.component';

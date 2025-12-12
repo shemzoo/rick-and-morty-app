@@ -1,12 +1,12 @@
 import { memo, useEffect, useState } from 'react';
 import type { FC } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { CheckmarkIcon, CloseIcon, EditIcon } from '@/assets';
-import { statusOptions } from '@/pages';
 import { Selector, StatusIcon, TextInput } from '@/shared/components';
-import { capitalize, classNames } from '@/shared/helpers';
+import { classNames } from '@/shared/helpers';
 import { type ICharacter } from '@/shared/types';
 
 import styles from './CharacterCard.module.scss';
@@ -18,6 +18,7 @@ interface ICharacterCardProps {
 
 export const CharacterCard: FC<ICharacterCardProps> = memo(
   ({ character, onUpdate }) => {
+    const { t } = useTranslation();
     const [mode, setMode] = useState<'view' | 'edit'>('view');
     const [editedCharacter, setEditedCharacter] = useState(character);
 
@@ -45,6 +46,12 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
     ) => {
       setEditedCharacter((prev) => ({ ...prev, [field]: value }));
     };
+
+    const statusOptions: { value: string; label: string }[] = [
+      { value: 'alive', label: t('statusOptions.alive') },
+      { value: 'dead', label: t('statusOptions.dead') },
+      { value: 'unknown', label: t('statusOptions.unknown') }
+    ];
 
     const { name, gender, species, location, status, image } = editedCharacter;
 
@@ -83,18 +90,26 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
             </div>
             <div className={styles.card__row}>
               <div className={styles.card__row}>
-                <p className={styles.card__label}>Gender</p>
-                <p className={styles.card__value}>{gender}</p>
+                <p className={styles.card__label}>{t('charCard.gender')}</p>
+                <p className={styles.card__value}>
+                  {t(`genderOptions.${gender.toLowerCase()}`, {
+                    defaultValue: gender,
+                  })}
+                </p>
               </div>
             </div>
             <div className={styles.card__row}>
               <div className={styles.card__row}>
-                <p className={styles.card__label}>Species</p>
-                <p className={styles.card__value}>{species}</p>
+                <p className={styles.card__label}>{t('charCard.species')}</p>
+                <p className={styles.card__value}>
+                  {t(`speciesOptions.${species.toLowerCase()}`, {
+                    defaultValue: species,
+                  })}
+                </p>
               </div>
             </div>
             <div className={styles.card__row}>
-              <p className={styles.card__label}>Location</p>
+              <p className={styles.card__label}>{t('charCard.location')}</p>
               <div
                 className={classNames(
                   styles.card__value,
@@ -106,7 +121,7 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
                   onChange={(value) =>
                     handleInputChange('location', {
                       ...location,
-                      name: value
+                      name: value,
                     })
                   }
                   variant='underlined'
@@ -114,7 +129,7 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
               </div>
             </div>
             <div className={styles.card__row}>
-              <p className={styles.card__label}>Status</p>
+              <p className={styles.card__label}>{t('charCard.status')}</p>
               <div
                 className={classNames(
                   styles.card__value,
@@ -126,11 +141,10 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
                   size='small'
                   options={statusOptions}
                   onChange={(val) => handleInputChange('status', val)}
-                  placeholder='Select status'
+                  placeholder={t('charCard.selectStatus')}
                   OptionRenderer={({ option }) => (
                     <>
                       {option?.label}
-
                       <StatusIcon status={option?.value} />
                     </>
                   )}
@@ -169,21 +183,33 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
             </Link>
           </div>
           <div className={styles.card__row}>
-            <p className={styles.card__label}>Gender</p>
-            <p className={styles.card__value}>{gender}</p>{' '}
+            <p className={styles.card__label}>{t('charCard.gender')}</p>
+            <p className={styles.card__value}>
+              {t(`genderOptions.${gender.toLowerCase()}`, {
+                defaultValue: gender
+              })}
+            </p>
           </div>
           <div className={styles.card__row}>
-            <p className={styles.card__label}>Species</p>
-            <p className={styles.card__value}>{species}</p>
+            <p className={styles.card__label}>{t('charCard.species')}</p>
+            <p className={styles.card__value}>
+              {t(`speciesOptions.${species.toLowerCase()}`, {
+                defaultValue: species
+              })}
+            </p>
           </div>
           <div className={styles.card__row}>
-            <p className={styles.card__label}>Location</p>
+            <p className={styles.card__label}>{t('charCard.location')}</p>
             <p className={styles.card__value}>{location.name}</p>
           </div>
           <div className={styles.card__row}>
-            <p className={styles.card__label}>Status</p>
+            <p className={styles.card__label}>{t('charCard.status')}</p>
             <div className={styles.card__status}>
-              <p className={styles.card__value}>{capitalize(status)}</p>
+              <p className={styles.card__value}>
+                {t(`statusOptions.${status.toLowerCase()}`, {
+                  defaultValue: status
+                })}
+              </p>
               <StatusIcon status={status} />
             </div>
           </div>

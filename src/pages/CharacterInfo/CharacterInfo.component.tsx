@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import { ArrowBackIcon } from '@/assets';
@@ -9,61 +10,49 @@ import styles from './CharacterInfo.module.scss';
 
 export const CharacterInfo = () => {
   const { id } = useParams<{ id: string }>();
+  const { t } = useTranslation();
   const {
     data: character,
     isLoading,
     isError,
-    error
+    error,
   } = useGetCharacterByIdQuery(Number(id), {
-    skip: !id
+    skip: !id,
   });
 
   if (isLoading) {
-    return (
-      <Loader
-        size='large'
-        text='Loading character card...'
-      />
-    );
+    return <Loader size='large' text={t('loadingCharacter')} />;
   }
 
   const isNotFound = isErrorWithStatus(error, 404);
   const isGenericError = isError && !isNotFound;
 
   if (isNotFound) {
-    return (
-      <div className={styles.error}>
-        Character with ID {id} does not exist.
-      </div>
-    );
+    return <div className={styles.error}>{t('characterNotFound', { id })}</div>;
   }
 
   if (isGenericError || !character) {
-    return (
-      <div className={styles.error}>
-        An unexpected error occurred. Please try again later.
-      </div>
-    );
+    return <div className={styles.error}>{t('genericError')}</div>;
   }
 
   const infoItems = [
-    { label: 'Gender', value: character.gender },
-    { label: 'Status', value: character.status },
-    { label: 'Specie', value: character.species },
-    { label: 'Origin', value: capitalize(character.origin.name) },
-    { label: 'Type', value: character.type || 'Unknown' },
-    { label: 'Location', value: character.location.name }
+    { label: t('charInfo.gender'), value: character.gender },
+    { label: t('charInfo.status'), value: character.status },
+    { label: t('charInfo.specie'), value: character.species },
+    {
+      label: t('charInfo.origin'),
+      value: capitalize(character.origin.name),
+    },
+    { label: t('charInfo.type'), value: character.type || t('statusOptions.unknown') },
+    { label: t('charInfo.location'), value: character.location.name },
   ];
 
   return (
     <div className={styles['info-page']}>
-      <Link
-        to='/'
-        className={styles['info-page__back-button']}
-      >
+      <Link to='/' className={styles['info-page__back-button']}>
         <ArrowBackIcon />
 
-        <span>GO BACK</span>
+        <span>{t('goBack')}</span>
       </Link>
 
       <div className={styles['info-page__content']}>
@@ -75,14 +64,11 @@ export const CharacterInfo = () => {
 
         <h1 className={styles['info-page__name']}>{character.name}</h1>
 
-        <h2 className={styles['info-page__title']}>Information</h2>
+        <h2 className={styles['info-page__title']}>{t('information')}</h2>
 
         <ul className={styles['info-page__list']}>
           {infoItems.map((item) => (
-            <li
-              key={item.label}
-              className={styles['info-page__list-item']}
-            >
+            <li key={item.label} className={styles['info-page__list-item']}>
               <span className={styles['info-page__list-item-label']}>
                 {item.label}
               </span>
