@@ -16,4 +16,10 @@
     align-items: center;
     justify-content: space-between;
   }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
 }
