@@ -1,0 +1,29 @@
+@use '@/styles/_variables' as *;
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid $color-text-primary;
+  background-color: $white;
+  color: $color-text-primary;
+  cursor: pointer;
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 21px;
+  letter-spacing: 0.25px;
+
+  transition: all 0.3s ease-in-out;
+
+  &_dark {
+    background-color: $color-black-bg;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

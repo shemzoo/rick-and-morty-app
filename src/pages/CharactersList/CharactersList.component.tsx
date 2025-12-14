@@ -1,4 +1,5 @@
 import { Toaster } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 
@@ -10,32 +11,8 @@ import { CharacterCard, FilterPanel } from '@/widgets';
 
 import styles from './CharactersList.module.scss';
 
-export const statusOptions: { value: string; label: string }[] = [
-  { value: 'alive', label: 'Alive' },
-  { value: 'dead', label: 'Dead' },
-  { value: 'unknown', label: 'Unknown' }
-];
-
-export const speciesOptions = [
-  { value: 'human', label: 'Human' },
-  { value: 'alien', label: 'Alien' },
-  { value: 'humanoid', label: 'Humanoid' },
-  { value: 'animal', label: 'Animal' },
-  { value: 'robot', label: 'Robot' },
-  { value: 'cronenberg', label: 'Cronenberg' },
-  { value: 'mythological creature', label: 'Mythological Creature' },
-  { value: 'disease', label: 'Disease' },
-  { value: 'unknown', label: 'Unknown' }
-];
-
-export const genderOptions = [
-  { value: 'female', label: 'Female' },
-  { value: 'male', label: 'Male' },
-  { value: 'genderless', label: 'Genderless' },
-  { value: 'unknown', label: 'Unknown' }
-];
-
 export const CharactersList = () => {
+  const { t } = useTranslation();
   const {
     characters,
     isLoading,
@@ -54,7 +31,7 @@ export const CharactersList = () => {
       return (
         <Loader
           size='large'
-          text='Loading characters...'
+          text={t('loadingCharacters')}
         />
       );
     }
@@ -62,7 +39,7 @@ export const CharactersList = () => {
     if (isNotFound) {
       return (
         <div className={styles.list__message}>
-          <p>Персонажи с такими параметрами не найдены</p>
+          <p>{t('charactersNotFound')}</p>
         </div>
       );
     }
@@ -83,7 +60,7 @@ export const CharactersList = () => {
         endMessage={
           !hasNextPage && characters.length > 0 ? (
             <p className={styles['list__end-message']}>
-              <b>Конец списка персонажей</b>
+              <b>{t('endOfList')}</b>
             </p>
           ) : null
         }
