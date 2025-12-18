@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 import { MoonIcon, SunIcon } from '@/assets/icons';
 import { useAppDispatch } from '@/hooks';
 import { classNames } from '@/shared/helpers';
-import { type RootState } from '@/stores/store';
+import { getThemeState } from '@/stores/selectors';
 import { toggleTheme } from '@/stores/theme';
 
 import styles from './ThemeSwitcher.module.scss';
 
 export const ThemeSwitcher = () => {
   const dispatch = useAppDispatch();
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useSelector(getThemeState);
   const isDark = theme === 'dark';
 
   const onToggle = () => {

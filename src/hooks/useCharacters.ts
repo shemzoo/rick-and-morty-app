@@ -7,11 +7,11 @@ import { isErrorWithStatus } from '@/shared/helpers';
 import { type ICharacter } from '@/shared/types';
 import { useGetCharactersQuery } from '@/stores/api';
 import { updateSelectedCharacter } from '@/stores/characters';
-import { type RootState } from '@/stores/store';
+import { getCharactersFilters } from '@/stores/selectors';
 
 export const useCharacters = () => {
   const dispatch = useAppDispatch();
-  const filters = useSelector((state: RootState) => state.characters.filters);
+  const filters = useSelector(getCharactersFilters);
 
   const [page, setPage] = useState(1);
   const [allCharacters, setAllCharacters] = useState<ICharacter[]>([]);

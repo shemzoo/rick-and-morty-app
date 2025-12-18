@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 import LogoDark from '@/assets/logo-dark.svg?react';
 import LogoLight from '@/assets/logo-light.svg?react';
-import { type RootState } from '@/stores/store';
+import { getThemeState } from '@/stores/selectors';
 
 import styles from './Logo.module.scss';
 
 export const Logo = () => {
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useSelector(getThemeState);
   const isDark = theme === 'dark';
 
   return (

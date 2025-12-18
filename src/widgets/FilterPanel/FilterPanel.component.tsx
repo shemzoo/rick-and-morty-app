@@ -10,14 +10,14 @@ import {
   getStatusOptions,
 } from '@/shared/helpers';
 import { setFilters } from '@/stores/characters';
-import { type RootState } from '@/stores/store';
+import { getCharactersFilters } from '@/stores/selectors';
 
 import styles from './FilterPanel.module.scss';
 
 export const FilterPanel = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const filters = useSelector((state: RootState) => state.characters.filters);
+  const filters = useSelector(getCharactersFilters);
 
   const statusOptions = getStatusOptions(t);
   const speciesOptions = getSpeciesOptions(t);
