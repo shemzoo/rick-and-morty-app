@@ -3,7 +3,6 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { type ICharacter, type IFilters } from '@/shared/types';
 
 interface CharactersState {
-  selectedCharacter: ICharacter | null;
   filters: IFilters;
 }
 
@@ -15,7 +14,6 @@ const initialFiltersState: IFilters = {
 };
 
 export const initialState: CharactersState = {
-  selectedCharacter: null,
   filters: initialFiltersState
 };
 
@@ -31,16 +29,10 @@ const charactersSlice = createSlice({
     },
     resetFilters: (state) => {
       state.filters = initialFiltersState;
-    },
-    updateSelectedCharacter: (state, action: PayloadAction<ICharacter>) => {
-      if (state.selectedCharacter?.id === action.payload.id) {
-        state.selectedCharacter = action.payload;
-      }
     }
   }
 });
 
-export const { setFilters, resetFilters, updateSelectedCharacter } =
-  charactersSlice.actions;
+export const { setFilters, resetFilters } = charactersSlice.actions;
 
 export default charactersSlice.reducer;
