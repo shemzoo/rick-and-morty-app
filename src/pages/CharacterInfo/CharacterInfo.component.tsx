@@ -21,23 +21,11 @@ export const CharacterInfo = () => {
     skip: !id,
   });
 
-  if (isLoading) {
-    return <Loader size='large' text={t('loadingCharacter')} />;
-  }
-
-  const isNotFound = isErrorWithStatus(error, 404);
-  const isGenericError = isError && !isNotFound;
-
-  if (isNotFound) {
-    return <div className={styles.error}>{t('characterNotFound', { id })}</div>;
-  }
-
-  if (isGenericError || !character) {
-    return <div className={styles.error}>{t('genericError')}</div>;
-  }
-
-  const infoItems = useMemo(
-    () => [
+  const infoItems = useMemo(() => {
+    if (!character) {
+      return [];
+    }
+    return [
       {
         label: t('charInfo.gender'),
         value: t(`genderOptions.${character.gender.toLowerCase()}`, {
@@ -65,9 +53,23 @@ export const CharacterInfo = () => {
         value: character.type || t('genderOptions.unknown'),
       },
       { label: t('charInfo.location'), value: character.location.name },
-    ],
-    [character, t]
-  );
+    ];
+  }, [character, t]);
+
+  if (isLoading) {
+    return <Loader size='large' text={t('loadingCharacter')} />;
+  }
+
+  const isNotFound = isErrorWithStatus(error, 404);
+  const isGenericError = isError && !isNotFound;
+
+  if (isNotFound) {
+    return <div className={styles.error}>{t('characterNotFound', { id })}</div>;
+  }
+
+  if (isGenericError || !character) {
+    return <div className={styles.error}>{t('genericError')}</div>;
+  }
 
   return (
     <div className={styles['info-page']}>
