@@ -1,4 +1,3 @@
-import { Toaster } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
@@ -82,7 +81,6 @@ export const CharactersList = () => {
 
   return (
     <>
-      <Toaster position='bottom-right' />
       <div className={styles.list}>
         <img
           className={styles.list__logo}
