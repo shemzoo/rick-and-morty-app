@@ -1,4 +1,3 @@
-import { Toaster } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
@@ -6,7 +5,7 @@ import { useSelector } from 'react-redux';
 import logo from '@/assets/rick-and-morty-logo.png';
 import { useCharacters, useSyncFiltersWithUrl } from '@/hooks';
 import { Loader } from '@/shared/components';
-import { type RootState } from '@/stores/store';
+import { getCharactersFilters } from '@/stores/selectors';
 import { CharacterCard, FilterPanel } from '@/widgets';
 
 import styles from './CharactersList.module.scss';
@@ -23,7 +22,7 @@ export const CharactersList = () => {
     updateCharacter
   } = useCharacters();
 
-  const filters = useSelector((state: RootState) => state.characters.filters);
+  const filters = useSelector(getCharactersFilters);
   useSyncFiltersWithUrl(filters);
 
   const renderContent = () => {
@@ -82,7 +81,6 @@ export const CharactersList = () => {
 
   return (
     <>
-      <Toaster position='bottom-right' />
       <div className={styles.list}>
         <img
           className={styles.list__logo}

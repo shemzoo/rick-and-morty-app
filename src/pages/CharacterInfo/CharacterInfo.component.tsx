@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
@@ -20,6 +21,41 @@ export const CharacterInfo = () => {
     skip: !id,
   });
 
+  const infoItems = useMemo(() => {
+    if (!character) {
+      return [];
+    }
+    return [
+      {
+        label: t('charInfo.gender'),
+        value: t(`genderOptions.${character.gender.toLowerCase()}`, {
+          defaultValue: character.gender,
+        }),
+      },
+      {
+        label: t('charInfo.status'),
+        value: t(`statusOptions.${character.status.toLowerCase()}`, {
+          defaultValue: character.status,
+        }),
+      },
+      {
+        label: t('charInfo.specie'),
+        value: t(`speciesOptions.${character.species.toLowerCase()}`, {
+          defaultValue: character.species,
+        }),
+      },
+      {
+        label: t('charInfo.origin'),
+        value: capitalize(character.origin.name),
+      },
+      {
+        label: t('charInfo.type'),
+        value: character.type || t('genderOptions.unknown'),
+      },
+      { label: t('charInfo.location'), value: character.location.name },
+    ];
+  }, [character, t]);
+
   if (isLoading) {
     return <Loader size='large' text={t('loadingCharacter')} />;
   }
@@ -34,36 +70,6 @@ export const CharacterInfo = () => {
   if (isGenericError || !character) {
     return <div className={styles.error}>{t('genericError')}</div>;
   }
-
-  const infoItems = [
-    {
-      label: t('charInfo.gender'),
-      value: t(`genderOptions.${character.gender.toLowerCase()}`, {
-        defaultValue: character.gender,
-      }),
-    },
-    {
-      label: t('charInfo.status'),
-      value: t(`statusOptions.${character.status.toLowerCase()}`, {
-        defaultValue: character.status,
-      }),
-    },
-    {
-      label: t('charInfo.specie'),
-      value: t(`speciesOptions.${character.species.toLowerCase()}`, {
-        defaultValue: character.species,
-      }),
-    },
-    {
-      label: t('charInfo.origin'),
-      value: capitalize(character.origin.name),
-    },
-    {
-      label: t('charInfo.type'),
-      value: character.type || t('genderOptions.unknown'),
-    },
-    { label: t('charInfo.location'), value: character.location.name },
-  ];
 
   return (
     <div className={styles['info-page']}>

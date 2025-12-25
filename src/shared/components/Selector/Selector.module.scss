@@ -37,6 +37,10 @@
       display: flex;
       align-items: center;
     }
+
+    svg {
+      color: var(--icon-color-secondary);
+    }
   }
 
   &__options {

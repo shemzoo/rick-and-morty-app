@@ -2,13 +2,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { classNames } from '@/shared/helpers';
-import { type RootState } from '@/stores/store';
+import { getThemeState } from '@/stores/selectors';
 
 import styles from './LangSwitcher.module.scss';
 
 export const LangSwitcher = () => {
   const { i18n, t } = useTranslation();
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useSelector(getThemeState);
   const isDark = theme === 'dark';
 
   const onToggle = () => {

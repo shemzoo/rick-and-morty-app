@@ -20,6 +20,10 @@
     color: var(--text-color);
     background: none;
     cursor: pointer;
+
+    svg {
+      color: var(--icon-color-secondary);
+    }
   }
 
   &__content {
