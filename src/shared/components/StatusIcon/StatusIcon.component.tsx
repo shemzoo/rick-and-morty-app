@@ -1,4 +1,4 @@
-import { classNames } from '@/shared/helpers/classNames';
+import { classNames } from '@/shared/lib/utils/classNames';
 
 import styles from './StatusIcon.module.scss';
 

@@ -2,11 +2,13 @@ import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 
-import logo from '@/assets/rick-and-morty-logo.png';
-import { useCharacters, useSyncFiltersWithUrl } from '@/hooks';
-import { Loader } from '@/shared/components';
-import { getCharactersFilters } from '@/stores/selectors';
-import { CharacterCard, FilterPanel } from '@/widgets';
+import logo from '@/shared/assets/rick-and-morty-logo.png';
+import { useCharacters } from '@/entities/character/model/hooks';
+import { useSyncFiltersWithUrl } from '@/features/filterCharacters/model/hooks';
+import { Loader } from '@/shared/ui';
+import { getCharactersFilters } from '@/features/filterCharacters/model';
+import { CharacterCard } from '@/entities/character/ui';
+import { FilterPanel } from '@/features/filterCharacters/ui';
 
 import styles from './CharactersList.module.scss';
 

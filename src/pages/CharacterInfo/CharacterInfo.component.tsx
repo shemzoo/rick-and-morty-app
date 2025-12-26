@@ -1,11 +1,13 @@
 import { useMemo } from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
-import { ArrowBackIcon } from '@/assets';
-import { Loader } from '@/shared/components';
-import { capitalize, isErrorWithStatus } from '@/shared/helpers';
-import { useGetCharacterByIdQuery } from '@/stores/api';
+import { useGetCharacterByIdQuery } from '@/entities/character/api';
+import { isErrorWithStatus } from '@/shared/api/rtkQuery';
+import { ArrowBackIcon } from '@/shared/assets/icons';
+import { capitalize } from '@/shared/lib/utils';
+import { Loader } from '@/shared/ui/';
 
 import styles from './CharacterInfo.module.scss';
 
@@ -16,9 +18,9 @@ export const CharacterInfo = () => {
     data: character,
     isLoading,
     isError,
-    error,
+    error
   } = useGetCharacterByIdQuery(Number(id), {
-    skip: !id,
+    skip: !id
   });
 
   const infoItems = useMemo(() => {
@@ -29,35 +31,40 @@ export const CharacterInfo = () => {
       {
         label: t('charInfo.gender'),
         value: t(`genderOptions.${character.gender.toLowerCase()}`, {
-          defaultValue: character.gender,
-        }),
+          defaultValue: character.gender
+        })
       },
       {
         label: t('charInfo.status'),
         value: t(`statusOptions.${character.status.toLowerCase()}`, {
-          defaultValue: character.status,
-        }),
+          defaultValue: character.status
+        })
       },
       {
         label: t('charInfo.specie'),
         value: t(`speciesOptions.${character.species.toLowerCase()}`, {
-          defaultValue: character.species,
-        }),
+          defaultValue: character.species
+        })
       },
       {
         label: t('charInfo.origin'),
-        value: capitalize(character.origin.name),
+        value: capitalize(character.origin.name)
       },
       {
         label: t('charInfo.type'),
-        value: character.type || t('genderOptions.unknown'),
+        value: character.type || t('genderOptions.unknown')
       },
-      { label: t('charInfo.location'), value: character.location.name },
+      { label: t('charInfo.location'), value: character.location.name }
     ];
   }, [character, t]);
 
   if (isLoading) {
-    return <Loader size='large' text={t('loadingCharacter')} />;
+    return (
+      <Loader
+        size='large'
+        text={t('loadingCharacter')}
+      />
+    );
   }
 
   const isNotFound = isErrorWithStatus(error, 404);
@@ -73,7 +80,10 @@ export const CharacterInfo = () => {
 
   return (
     <div className={styles['info-page']}>
-      <Link to='/' className={styles['info-page__back-button']}>
+      <Link
+        to='/'
+        className={styles['info-page__back-button']}
+      >
         <ArrowBackIcon />
 
         <span>{t('goBack')}</span>
@@ -92,7 +102,10 @@ export const CharacterInfo = () => {
 
         <ul className={styles['info-page__list']}>
           {infoItems.map((item) => (
-            <li key={item.label} className={styles['info-page__list-item']}>
+            <li
+              key={item.label}
+              className={styles['info-page__list-item']}
+            >
               <span className={styles['info-page__list-item-label']}>
                 {item.label}
               </span>

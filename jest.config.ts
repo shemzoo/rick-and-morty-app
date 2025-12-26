@@ -13,6 +13,11 @@ const config: Config = {
     // Handle svg?react imports
     '\\.svg\\?react$': '<rootDir>/__mocks__/svgMock.tsx',
 
+    '^@app/(.*)$': '<rootDir>/src/app/$1',
+    '^@pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^@features/(.*)$': '<rootDir>/src/features/$1',
+    '^@entities/(.*)$': '<rootDir>/src/entities/$1',
+    '^@shared/(.*)$': '<rootDir>/src/shared/$1',
     '@/(.*)$': '<rootDir>/src/$1',
 
     '\\.(scss|css)$': 'identity-obj-proxy',
