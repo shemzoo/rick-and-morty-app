@@ -11,6 +11,7 @@
     width: 600px;
     height: 200px;
     margin-bottom: 16px;
+    object-fit: contain;
   }
 
   &__items {
@@ -45,5 +46,39 @@
     font-size: 24px;
     color: #333;
     text-align: center;
+  }
+}
+
+@media (max-width: 1023px) {
+  .list {
+    &__logo {
+      width: min(100%, 420px);
+      height: auto;
+    }
+
+    &__items {
+      gap: 20px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .list {
+    &__logo {
+      width: min(100%, 312px);
+      margin-bottom: 24px;
+    }
+
+    &__items {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      width: 100%;
+      justify-items: center;
+    }
+
+    &__message,
+    &__end-message {
+      font-size: 18px;
+    }
   }
 }
