@@ -5,11 +5,15 @@ import { Toaster } from 'react-hot-toast';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
+import { registerSW } from 'virtual:pwa-register';
+
 import App from './App';
+import './i18n';
 import { store } from './stores/store';
 
-import './i18n';
 import './index.scss';
+
+registerSW({ immediate: true });
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
