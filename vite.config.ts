@@ -55,15 +55,9 @@ export default defineConfig({
             type: 'image/png'
           },
           {
-            src: 'pwa-258x258.png',
-            sizes: '258x258',
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
             type: 'image/png'
-          },
-          {
-            src: 'pwa-258x258.png',
-            sizes: '258x258',
-            type: 'image/png',
-            purpose: 'any'
           }
         ]
       }
