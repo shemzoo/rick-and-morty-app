@@ -30,21 +30,21 @@ export default defineConfig({
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
-        start_url: '/',
-        scope: '/',
+        start_url: '/rick-and-morty-app/',
+        scope: '/rick-and-morty-app/',
         orientation: 'portrait',
         lang: 'ru-RU',
         screenshots: [
           {
             src: 'screenshots/desktop.png',
             type: 'image/png',
-            sizes: '2107x1327',
+            sizes: '1899×826',
             form_factor: 'wide'
           },
           {
             src: 'screenshots/mobile.png',
             type: 'image/png',
-            sizes: '358x740',
+            sizes: '386×687',
             form_factor: 'narrow'
           }
         ],
@@ -63,7 +63,7 @@ export default defineConfig({
             src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable'
+            purpose: 'any'
           }
         ]
       }
