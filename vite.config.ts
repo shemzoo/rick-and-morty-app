@@ -38,13 +38,13 @@ export default defineConfig({
           {
             src: 'screenshots/desktop.png',
             type: 'image/png',
-            sizes: '1899×826',
+            sizes: '1899x826',
             form_factor: 'wide'
           },
           {
             src: 'screenshots/mobile.png',
             type: 'image/png',
-            sizes: '386×687',
+            sizes: '386x687',
             form_factor: 'narrow'
           }
         ],
@@ -55,13 +55,13 @@ export default defineConfig({
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
+            src: 'pwa-258x258.png',
+            sizes: '258x258',
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
+            src: 'pwa-258x258.png',
+            sizes: '258x258',
             type: 'image/png',
             purpose: 'any'
           }
