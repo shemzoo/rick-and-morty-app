@@ -163,6 +163,11 @@ body {
   --character-list-item-border-color: rgba(33, 33, 33, 0.08);
   --icon-color-secondary: rgba(0, 0, 0, 0.54);
   --selector-arrow-color: rgba(0, 0, 0, 0.54);
+  --filters-toggle-background-color: #eaf4ff;
+  --filters-toggle-border-color: #d7e4f2;
+  --filters-toggle-text-color: #2196f3;
+  --filters-toggle-icon-color: #7d8b99;
+  --filters-toggle-shadow-color: rgba(0, 0, 0, 0.08);
 }
 
 .dark {
@@ -185,4 +190,9 @@ body {
   --character-image-border-color: #3c3e44;
   --character-list-item-border-color: rgba(255, 255, 255, 0.1);
   --icon-color-secondary: #cacaca;
+  --filters-toggle-background-color: #263843;
+  --filters-toggle-border-color: #3c5967;
+  --filters-toggle-text-color: #7bd3ff;
+  --filters-toggle-icon-color: #99b7c4;
+  --filters-toggle-shadow-color: rgba(0, 0, 0, 0.28);
 }

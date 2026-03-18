@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
@@ -16,9 +17,9 @@ export const CharacterInfo = () => {
     data: character,
     isLoading,
     isError,
-    error,
+    error
   } = useGetCharacterByIdQuery(Number(id), {
-    skip: !id,
+    skip: !id
   });
 
   const infoItems = useMemo(() => {
@@ -29,55 +30,82 @@ export const CharacterInfo = () => {
       {
         label: t('charInfo.gender'),
         value: t(`genderOptions.${character.gender.toLowerCase()}`, {
-          defaultValue: character.gender,
-        }),
+          defaultValue: character.gender
+        })
       },
       {
         label: t('charInfo.status'),
         value: t(`statusOptions.${character.status.toLowerCase()}`, {
-          defaultValue: character.status,
-        }),
+          defaultValue: character.status
+        })
       },
       {
         label: t('charInfo.specie'),
         value: t(`speciesOptions.${character.species.toLowerCase()}`, {
-          defaultValue: character.species,
-        }),
+          defaultValue: character.species
+        })
       },
       {
         label: t('charInfo.origin'),
-        value: capitalize(character.origin.name),
+        value: capitalize(character.origin.name)
       },
       {
         label: t('charInfo.type'),
-        value: character.type || t('genderOptions.unknown'),
+        value: character.type || t('genderOptions.unknown')
       },
-      { label: t('charInfo.location'), value: character.location.name },
+      { label: t('charInfo.location'), value: character.location.name }
     ];
   }, [character, t]);
 
+  const backButton = (
+    <Link
+      to='/'
+      className={styles['info-page__back-button']}
+    >
+      <ArrowBackIcon />
+      <span>{t('goBack')}</span>
+    </Link>
+  );
+
   if (isLoading) {
-    return <Loader size='large' text={t('loadingCharacter')} />;
+    return (
+      <div className={styles['info-page']}>
+        {backButton}
+        <div
+          className={styles['info-page__content']}
+          data-testid='character-info-loading'
+        >
+          <div className={styles['info-page__loader']}>
+            <Loader
+              size='large'
+              text={t('loadingCharacter')}
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const isNotFound = isErrorWithStatus(error, 404);
   const isGenericError = isError && !isNotFound;
 
   if (isNotFound) {
-    return <div className={styles.error}>{t('characterNotFound', { id })}</div>;
+    return (
+      <div className={styles['info-page__error']}>
+        {t('characterNotFound', { id })}
+      </div>
+    );
   }
 
   if (isGenericError || !character) {
-    return <div className={styles.error}>{t('genericError')}</div>;
+    return (
+      <div className={styles['info-page__error']}>{t('genericError')}</div>
+    );
   }
 
   return (
     <div className={styles['info-page']}>
-      <Link to='/' className={styles['info-page__back-button']}>
-        <ArrowBackIcon />
-
-        <span>{t('goBack')}</span>
-      </Link>
+      {backButton}
 
       <div className={styles['info-page__content']}>
         <img
@@ -92,7 +120,10 @@ export const CharacterInfo = () => {
 
         <ul className={styles['info-page__list']}>
           {infoItems.map((item) => (
-            <li key={item.label} className={styles['info-page__list-item']}>
+            <li
+              key={item.label}
+              className={styles['info-page__list-item']}
+            >
               <span className={styles['info-page__list-item-label']}>
                 {item.label}
               </span>

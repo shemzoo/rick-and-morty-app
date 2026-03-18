@@ -4,7 +4,7 @@ import { API_URL } from '@/api';
 import {
   type ICharacter,
   type ICharactersResponse,
-  type IFilters,
+  type IFilters
 } from '@/shared/types';
 
 type IGetCharactersQueryArgs = IFilters & { page?: number };
@@ -17,24 +17,26 @@ export const rickAndMortyApi = createApi({
     getCharacters: builder.query<ICharactersResponse, IGetCharactersQueryArgs>({
       query: (filters) => ({
         url: 'character',
-        params: filters,
+        params: filters
       }),
       providesTags: (result) =>
         result
           ? [
               ...result.results.map(({ id }) => ({
                 type: 'Character' as const,
-                id,
+                id
               })),
-              { type: 'Character' as const, id: 'LIST' },
+              { type: 'Character' as const, id: 'LIST' }
             ]
-          : [{ type: 'Character' as const, id: 'LIST' }],
+          : [{ type: 'Character' as const, id: 'LIST' }]
     }),
     getCharacterById: builder.query<ICharacter, number>({
       query: (id) => `character/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Character' as const, id }],
-    }),
-  }),
+      providesTags: (_result, _error, id) => [
+        { type: 'Character' as const, id }
+      ]
+    })
+  })
 });
 
 export const { useGetCharactersQuery, useGetCharacterByIdQuery } =

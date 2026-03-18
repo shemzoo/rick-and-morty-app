@@ -1,6 +1,6 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { type ICharacter, type IFilters } from '@/shared/types';
+import { type IFilters } from '@/shared/types';
 
 interface CharactersState {
   filters: IFilters;

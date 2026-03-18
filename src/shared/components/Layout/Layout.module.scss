@@ -16,3 +16,23 @@
     padding: 0 210px;
   }
 }
+
+@media (max-width: 1279px) {
+  .layout {
+    &__main-container {
+      padding: 0 48px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .layout {
+    &__main {
+      padding: 16px;
+    }
+
+    &__main-container {
+      padding: 0;
+    }
+  }
+}
