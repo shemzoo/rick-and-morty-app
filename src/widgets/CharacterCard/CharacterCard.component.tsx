@@ -2,12 +2,16 @@ import { memo, useEffect, useState } from 'react';
 import type { FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { CheckmarkIcon, CloseIcon, EditIcon } from '@/assets';
+import { CheckmarkIcon, CloseIcon, EditIcon, StarIcon } from '@/assets';
+import { useAppDispatch } from '@/hooks';
 import { Selector, StatusIcon, TextInput } from '@/shared/components';
 import { classNames } from '@/shared/helpers';
 import { type ICharacter } from '@/shared/types';
+import { toggleFavorite } from '@/stores/favorites';
+import { isFavoriteById } from '@/stores/selectors';
 
 import styles from './CharacterCard.module.scss';
 
@@ -19,8 +23,10 @@ interface ICharacterCardProps {
 export const CharacterCard: FC<ICharacterCardProps> = memo(
   ({ character, onUpdate }) => {
     const { t } = useTranslation();
+    const dispatch = useAppDispatch();
     const [mode, setMode] = useState<'view' | 'edit'>('view');
     const [editedCharacter, setEditedCharacter] = useState(character);
+    const isFavorite = useSelector(isFavoriteById(character.id));
 
     useEffect(() => {
       setEditedCharacter(character);
@@ -45,6 +51,10 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
       value: string | { name: string; url: string }
     ) => {
       setEditedCharacter((prev) => ({ ...prev, [field]: value }));
+    };
+
+    const onToggleFavorite = () => {
+      dispatch(toggleFavorite(character));
     };
 
     const statusOptions: { value: string; label: string }[] = [
@@ -74,6 +84,18 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
               onClick={onCancel}
             />
           </div>
+          <button
+            type='button'
+            className={classNames(styles.card__favorite, {
+              [styles.card__favorite_active]: isFavorite
+            })}
+            aria-label={t(isFavorite ? 'favorites.remove' : 'favorites.add', {
+              name: character.name
+            })}
+            onClick={onToggleFavorite}
+          >
+            <StarIcon variant={isFavorite ? 'filled' : 'outlined'} />
+          </button>
           <div className={styles.card__image}>
             <img
               src={image}
@@ -93,7 +115,7 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
                 <p className={styles.card__label}>{t('charCard.gender')}</p>
                 <p className={styles.card__value}>
                   {t(`genderOptions.${gender.toLowerCase()}`, {
-                    defaultValue: gender,
+                    defaultValue: gender
                   })}
                 </p>
               </div>
@@ -103,7 +125,7 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
                 <p className={styles.card__label}>{t('charCard.species')}</p>
                 <p className={styles.card__value}>
                   {t(`speciesOptions.${species.toLowerCase()}`, {
-                    defaultValue: species,
+                    defaultValue: species
                   })}
                 </p>
               </div>
@@ -121,7 +143,7 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
                   onChange={(value) =>
                     handleInputChange('location', {
                       ...location,
-                      name: value,
+                      name: value
                     })
                   }
                   variant='underlined'
@@ -167,6 +189,18 @@ export const CharacterCard: FC<ICharacterCardProps> = memo(
             onClick={onEdit}
           />
         </div>
+        <button
+          type='button'
+          className={classNames(styles.card__favorite, {
+            [styles.card__favorite_active]: isFavorite
+          })}
+          aria-label={t(isFavorite ? 'favorites.remove' : 'favorites.add', {
+            name: character.name
+          })}
+          onClick={onToggleFavorite}
+        >
+          <StarIcon variant={isFavorite ? 'filled' : 'outlined'} />
+        </button>
         <div className={styles.card__image}>
           <img
             src={image}
