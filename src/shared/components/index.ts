@@ -1,4 +1,3 @@
-export * from './FavoritesMenu/FavoritesMenu.component';
 export * from './Layout/Layout.component';
 export * from './Layout/ui/Footer/Footer.component';
 export * from './Layout/ui/Header/Header.component';

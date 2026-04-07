@@ -2,6 +2,8 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { type ICharacter } from '@/shared/types';
 
+import { FAVORITES_STORAGE_KEY } from './constants';
+
 export interface IFavoriteCharacter {
   id: number;
   name: string;
@@ -10,8 +12,6 @@ export interface IFavoriteCharacter {
 interface FavoritesState {
   items: IFavoriteCharacter[];
 }
-
-const FAVORITES_STORAGE_KEY = 'favorites';
 
 const getInitialFavorites = (): IFavoriteCharacter[] => {
   const rawFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
@@ -58,7 +58,5 @@ const favoritesSlice = createSlice({
 });
 
 export const { toggleFavorite, removeFavorite } = favoritesSlice.actions;
-
-export { FAVORITES_STORAGE_KEY };
 
 export default favoritesSlice.reducer;

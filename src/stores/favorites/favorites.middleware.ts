@@ -5,11 +5,8 @@ import {
 } from '@reduxjs/toolkit';
 
 import { type RootState } from '../store';
-import {
-  FAVORITES_STORAGE_KEY,
-  removeFavorite,
-  toggleFavorite
-} from './favorites.slice';
+import { FAVORITES_STORAGE_KEY } from './constants';
+import { removeFavorite, toggleFavorite } from './favorites.slice';
 
 export const favoritesListenerMiddleware = createListenerMiddleware();
 

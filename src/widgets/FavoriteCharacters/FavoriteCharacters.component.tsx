@@ -10,9 +10,9 @@ import { classNames } from '@/shared/helpers';
 import { removeFavorite } from '@/stores/favorites';
 import { getFavorites, getThemeState } from '@/stores/selectors';
 
-import styles from './FavoritesMenu.module.scss';
+import styles from './FavoriteCharacters.module.scss';
 
-export const FavoritesMenu = () => {
+export const FavoriteCharacters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);

@@ -59,8 +59,8 @@
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    width: 220px;
-    padding: 8px 0;
+    width: 240px;
+    padding: 4px 0;
     border: 1px solid var(--card-border-color);
     border-radius: 8px;
     background-color: var(--card-background-color);
@@ -76,24 +76,20 @@
     overflow-y: auto;
   }
 
-  &__item + &__item {
-    border-top: 1px solid var(--card-border-color);
-  }
-
   &__item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
 
   &__link {
     display: block;
     flex: 1;
-    padding: 12px 14px;
+    padding: 16px 0 16px 18px;
     color: var(--text-color);
     text-decoration: none;
     font-family: Roboto, sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.2;
   }
 
@@ -101,9 +97,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    margin-right: 10px;
+    width: 44px;
+    height: 44px;
+    margin-right: 12px;
     border: 0;
     border-radius: 6px;
     background: transparent;
@@ -116,8 +112,8 @@
     }
 
     svg {
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
     }
   }
 
