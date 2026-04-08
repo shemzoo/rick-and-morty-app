@@ -1,25 +1,48 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-
 import { CloseIcon, StarIcon } from '@/assets/icons';
-import { useAppDispatch } from '@/hooks';
 import { classNames } from '@/shared/helpers';
-import { removeFavorite } from '@/stores/favorites';
-import { getFavorites, getThemeState } from '@/stores/selectors';
 
 import styles from './FavoriteCharacters.module.scss';
 
-export const FavoriteCharacters = () => {
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+export interface IFavoriteCharacterItem {
+  id: number;
+  name: string;
+}
+
+export interface FavoriteCharactersLabels {
+  empty?: string;
+  toggleList?: string;
+  remove?: (name: string) => string;
+}
+
+export interface FavoriteCharactersProps {
+  favorites: IFavoriteCharacterItem[];
+  isDark?: boolean;
+  labels?: FavoriteCharactersLabels;
+  onNavigate?: (id: number) => void;
+  onRemove: (id: number) => void;
+}
+
+const defaultLabels: Required<FavoriteCharactersLabels> = {
+  empty: 'No favorite characters yet.',
+  toggleList: 'Open favorite characters',
+  remove: (name: string) => `Remove ${name} from favorites`
+};
+
+export const FavoriteCharacters = ({
+  favorites,
+  isDark = false,
+  labels,
+  onNavigate,
+  onRemove
+}: FavoriteCharactersProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const favorites = useSelector(getFavorites);
-  const { theme } = useSelector(getThemeState);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isDark = theme === 'dark';
+  const mergedLabels = {
+    ...defaultLabels,
+    ...labels
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -35,8 +58,9 @@ export const FavoriteCharacters = () => {
     };
   }, []);
 
-  const onRemoveFavorite = (id: number) => {
-    dispatch(removeFavorite(id));
+  const handleNavigate = (id: number) => {
+    onNavigate?.(id);
+    setIsOpen(false);
   };
 
   return (
@@ -50,7 +74,7 @@ export const FavoriteCharacters = () => {
           [styles.favorites__trigger_dark]: isDark,
           [styles.favorites__trigger_open]: isOpen
         })}
-        aria-label={t('favorites.toggleList')}
+        aria-label={mergedLabels.toggleList}
         aria-expanded={isOpen}
         onClick={() => setIsOpen((prev) => !prev)}
       >
@@ -69,20 +93,18 @@ export const FavoriteCharacters = () => {
                   key={favorite.id}
                   className={styles.favorites__item}
                 >
-                  <Link
-                    to={`/character/${favorite.id}`}
+                  <button
+                    type='button'
                     className={styles.favorites__link}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => handleNavigate(favorite.id)}
                   >
                     {favorite.name}
-                  </Link>
+                  </button>
                   <button
                     type='button'
                     className={styles.favorites__remove}
-                    aria-label={t('favorites.remove', {
-                      name: favorite.name
-                    })}
-                    onClick={() => onRemoveFavorite(favorite.id)}
+                    aria-label={mergedLabels.remove(favorite.name)}
+                    onClick={() => onRemove(favorite.id)}
                   >
                     <CloseIcon />
                   </button>
@@ -90,7 +112,7 @@ export const FavoriteCharacters = () => {
               ))}
             </ul>
           ) : (
-            <p className={styles.favorites__empty}>{t('favorites.empty')}</p>
+            <p className={styles.favorites__empty}>{mergedLabels.empty}</p>
           )}
         </div>
       )}

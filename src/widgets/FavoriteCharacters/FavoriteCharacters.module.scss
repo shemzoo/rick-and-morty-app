@@ -1,5 +1,3 @@
-@use '@/styles/_variables' as *;
-
 .favorites {
   position: relative;
 
@@ -11,8 +9,8 @@
     width: 40px;
     height: 40px;
     border-radius: 8px;
-    border: 1px solid $color-text-primary;
-    background-color: $white;
+    border: 1px solid var(--favorites-trigger-border-color, #1f2937);
+    background-color: var(--favorites-trigger-background-color, #ffffff);
     color: #12b800;
     cursor: pointer;
     transition:
@@ -25,8 +23,8 @@
     }
 
     &_dark {
-      background-color: $color-black-bg;
-      border-color: $white;
+      background-color: var(--favorites-trigger-background-dark-color, #1f1f1f);
+      border-color: var(--favorites-trigger-border-dark-color, #ffffff);
     }
 
     &_open {
@@ -48,7 +46,7 @@
     padding: 0 4px;
     border-radius: 999px;
     background-color: #12b800;
-    color: $white;
+    color: #ffffff;
     font-family: Roboto, sans-serif;
     font-size: 11px;
     font-weight: 700;
@@ -86,11 +84,15 @@
     display: block;
     flex: 1;
     padding: 16px 0 16px 18px;
+    border: 0;
+    background: transparent;
     color: var(--text-color);
     text-decoration: none;
+    text-align: left;
     font-family: Roboto, sans-serif;
     font-size: 15px;
     line-height: 1.2;
+    cursor: pointer;
   }
 
   &__remove {
