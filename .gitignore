@@ -27,3 +27,7 @@ npx
 *.njsproj
 *.sln
 *.sw?
+*storybook.log
+storybook-static
+playwright-report
+test-results

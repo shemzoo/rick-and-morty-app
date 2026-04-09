@@ -78,6 +78,7 @@ export const Selector = <T extends string | undefined>({
       <div
         className={styles.selector__header}
         onClick={() => setIsOpen(!isOpen)}
+        data-testid="selector-header"
       >
         {selectedOption ? (
           <OptionRenderer option={selectedOption} />
