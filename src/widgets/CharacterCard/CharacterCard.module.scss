@@ -35,6 +35,38 @@
     opacity: 1;
   }
 
+  &__favorite {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #12b800;
+    cursor: pointer;
+    transition:
+      transform 0.2s ease-in-out,
+      opacity 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.08);
+    }
+
+    svg {
+      width: 26px;
+      height: 24px;
+    }
+
+    &_active {
+      color: #12b800;
+    }
+  }
+
   &__image {
     width: 240px;
     height: 240px;
@@ -169,7 +201,7 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px 12px;
-      padding: 12px;
+      padding: 12px 12px 48px;
       align-items: start;
     }
 

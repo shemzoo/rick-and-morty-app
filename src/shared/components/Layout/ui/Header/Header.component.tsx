@@ -1,3 +1,5 @@
+import { FavoriteCharacters } from '@/widgets';
+
 import { LangSwitcher, Logo, ThemeSwitcher } from '@/shared/components';
 
 import styles from './Header.module.scss';
@@ -8,6 +10,7 @@ export const Header = () => {
       <div className={styles.header__container}>
         <Logo />
         <div className={styles.header__controls}>
+          <FavoriteCharacters />
           <ThemeSwitcher />
           <LangSwitcher />
         </div>
