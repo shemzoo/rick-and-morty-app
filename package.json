@@ -15,7 +15,7 @@
     "test:screenshot:update": "playwright test --project=screenshot-chromium -u",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d dist --nojekyll",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
